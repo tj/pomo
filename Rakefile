@@ -5,7 +5,7 @@ require 'rubygems'
 require 'rake'
 require 'echoe'
 
-Echoe.new "pomo", GEM_CLASS::VERSION do |p|
+Echoe.new "pomo", Pomo::VERSION do |p|
   p.author = "TJ Holowaychuk"
   p.email = "tj@vision-media.ca"
   p.summary = "Pomodoro time management for the command-line"
