@@ -70,6 +70,8 @@ command :view do |c|
     end
   end
 end
+alias_command :'view first', :view, '0'
+alias_command :'view last', :view, list.tasks.length - 1
 
 command :list do |c|
   c.syntax = 'pomo list [options]'
