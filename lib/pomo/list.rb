@@ -23,14 +23,42 @@ module Pomo
     
     ##
     # Find tasks by _args_, iterating with _block_.
+    #
+    # Supports the following:
+    #
+    #  * n
+    #  * n n n
+    #  * n..n
+    #  * n..-n
+    #  * first
+    #  * last
+    #  * incomplete
+    #  * complete[d]
+    #  * all
+    #
     
     def find *args, &block
-      if args.empty?
-        yield tasks.first, 0
+      found = []
+      found << tasks.first if args.empty?
+      if args.include? 'all'
+        found = tasks
+      elsif args.include? 'first'
+        found << tasks.first
+      elsif args.include? 'last'
+        found << tasks.last
+      elsif args.include?('complete') || args.include?('completed')
+        found = tasks.select { |task| task.complete? }
+      elsif args.include? 'incomplete'
+        found = tasks.select { |task| not task.complete? }
+      elsif args.any? { |arg| arg =~ /(\d+)\.\.(-?\d+)/ }
+        found = tasks[$1.to_i..$2.to_i]
       else
         tasks.each_with_index do |task, i|
-          yield task, i if args.any? { |a| a.to_i == i }
+          found << task if args.any? { |a| a.to_i == i } 
         end
+      end
+      found.each_with_index do |task, i|
+        yield task, i
       end
     end
     

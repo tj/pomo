@@ -31,8 +31,6 @@ command :start do |c|
     end
   end
 end
-alias_command :'start first', :start, '0'
-alias_command :'start last', :start, list.tasks.length - 1
  
 command :add do |c|
   c.syntax = 'pomo add <task> [options]'
@@ -59,29 +57,14 @@ command :remove do |c|
   c.example 'Remove the fifth task', 'pomo remove 5'
   c.example 'Remove the fifth task', 'pomo rm 5'
   c.action do |args, options|
-   list.tasks.each_with_index do |task, i|
-     if i == args.first.to_i
-       list.tasks.delete_at i
-       say "Removed #{task}"
-     end
-   end
+    list.find(*args) do |task, i|
+      list.tasks -= [task]
+      say "Removed #{task}"
+    end
    list.save
   end
 end
 alias_command :rm, :remove
-alias_command :'remove first', :remove, '0'
-alias_command :'remove last', :remove, list.tasks.length - 1
-
-command :'remove all' do |c|
-  c.syntax = 'pomo remove all'
-  c.description = 'Remove all tasks'
-  c.action do 
-   list.tasks = []
-   list.save
-   say "Tasks removed"
-  end
-end
-alias_command :'rm all', :'remove all'
 
 command :view do |c|
   c.syntax = 'pomo view [number] [options]'
@@ -91,16 +74,16 @@ command :view do |c|
   c.example 'View the last task', 'pomo view last'
   c.example 'View the fifth task', 'pomo view 5'
   c.action do |args, options|
-    if task = list.tasks.at(args.first ? args.first.to_i : 0)
+    list.find(*args) do |task, i|
+      say "\n"
       format = "%15s : %s\n"
       say format % ['name', task.name]
       say format % ['length', "#{task.length} minutes"]
       say format % ['description', task.description || '...']
     end
+    say "\n"
   end
 end
-alias_command :'view first', :view, '0'
-alias_command :'view last', :view, list.tasks.length - 1
 
 command :complete do |c|
   c.syntax = 'pomo complete [number] [options]'
@@ -110,15 +93,13 @@ command :complete do |c|
   c.example 'Mark last task as complete', 'pomo complete last'
   c.example 'Mark fifth task as complete', 'pomo complete 5'
   c.action do |args, options|
-    if task = list.tasks.at(args.first ? args.first.to_i : 0)
+    list.find(*args) do |task, i|
       task.complete = true
-      list.save
       say "Completed #{task}"
     end
+    list.save
   end
 end
-alias_command :'complete first', :complete, '0'
-alias_command :'complete last', :complete, list.tasks.length - 1
 
 command :list do |c|
   c.syntax = 'pomo list [options]'
@@ -127,11 +108,11 @@ command :list do |c|
   c.option '-c', '--complete', 'List only completed tasks'
   c.option '-i', '--incomplete', 'List only incompleted tasks'
   c.action do |args, options|
-   list.tasks.each_with_index do |task, i|
-     next if options.complete && !task.complete?
-     next if options.incomplete && task.complete?
-     say ' %s %2d. %-35s : %d minutes' % [task.complete? ? '√' : ' ', i, task.to_s, task.length]
-   end
+    list.tasks.each_with_index do |task, i|
+      next if options.complete && !task.complete?
+      next if options.incomplete && task.complete?
+      say ' %s %2d. %-35s : %d minutes' % [task.complete? ? '√' : ' ', i, task.to_s, task.length]
+    end
   end
 end
 
