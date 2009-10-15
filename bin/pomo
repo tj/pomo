@@ -7,8 +7,8 @@ require 'pomo'
 
 program :version, Pomo::VERSION
 program :description, "Pomodoro time management.
-    Most of the subcommands listed below work directly with tasks,
-    and because of this pomo provides a unified task selection api
+    Most of the subcommands work directly with tasks, and 
+    because of this pomo provides a unified task selection api
     shown below which can be used with most of the commands 
     (those with [task ...] in their synopsis). 
     

@@ -79,6 +79,25 @@ View task details:
 Remove all tasks:
     $ pomo remove all
     $ pomo rm all
+    
+## Task Selection API
+
+Taken from `pomo help`:
+
+    Most of the subcommands work directly with tasks,
+    and because of this pomo provides a unified task selection api
+    shown below which can be used with most of the commands 
+    (those with [task ...] in their synopsis). 
+  
+    n          : selects a single task by index : Ex: pomo remove 1
+    [n ]+      : selects several tasks by index : Ex: pomo remove 2 8 1
+    n..n       : selects a range of tasks       : Ex: pomo remove 5..9
+    n..-n      : selects a range of tasks       : Ex: pomo remove 2..-1
+    first      : selects the first task         : Ex: pomo remove first
+    last       : selects the last task          : Ex: pomo remove last
+    complete   : selects complete tasks         : Ex: pomo remove complete
+    incomplete : selects incomplete tasks       : Ex: pomo remove incomplete
+    all        : selects all tasks              : Ex: pomo remove all
 
 ## License
 
