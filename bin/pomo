@@ -15,7 +15,9 @@ command :add do |c|
   c.summary = 'Add a task'
   c.description = 'Add a task to the current list of tasks'
   c.example 'Adds the task "fix IE styling issues"', 'pomo add "fix IE styling issues"'
+  c.example 'Add a task with 60 minute limit', 'pomo add "create executable" --length 60'
   c.option '-d', '--description string', 'Add verbose task description'
+  c.option '-l', '--length minutes', 'Change the default length in minutes'
   c.action do |args, options|
    task = Pomo::Task.new(args.shift, options.__hash__)
    list << task
@@ -47,7 +49,7 @@ command :list do |c|
   c.description = 'List all tasks'
   c.action do |args, options|
    list.tasks.each_with_index do |task, i|
-     say '%2d. %s' % [i, task.to_s]
+     say '%2d. %-35s : %d minutes' % [i, task.to_s, task.length]
    end
   end
 end
