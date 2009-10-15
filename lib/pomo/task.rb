@@ -12,7 +12,6 @@ module Pomo
     # Task name.
     
     attr_reader :name
-    alias :to_s :name
     
     ##
     # Length in minutes.
@@ -40,6 +39,13 @@ module Pomo
     end
     
     ##
+    # Quoted task name.
+    
+    def to_s
+      name.inspect
+    end
+    
+    ##
     # Check if the task has been completed.
     
     def complete?
@@ -50,7 +56,7 @@ module Pomo
     # Start timing the task.
     
     def start
-      complete_message = "time is up, complete #{self} yet?"
+      complete_message = "time is up! hope you are finished #{self} after #{length} minutes :)"
       progress (0..length).to_a.reverse, :format => "(:progress_bar) :remaining minutes remaining", :complete_message => complete_message do |remaining|
         if remaining == length / 2
           notify_info "#{remaining} minutes remaining, half way there!"
