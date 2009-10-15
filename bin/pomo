@@ -7,7 +7,9 @@ require 'pomo'
 
 program :version, Pomo::VERSION
 program :description, 'Pomodoro time management'
-program :int_message, "\nTerminated pomodoro; any tasks which were running will not be marked as complete"
+program :int_message, "\nTerminated pomo" \
+                      "\n  * previously running tasks not marked as complete" \
+                      "\n  * manually complete a task with `$ pomo complete <task>`"
 
 list = Pomo::List.new '~/.pomo'
  
