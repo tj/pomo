@@ -22,6 +22,8 @@ command :start do |c|
     list.save
   end
 end
+alias_command :'start first', :start, '0'
+alias_command :'start last', :start, list.tasks.length - 1
  
 command :add do |c|
   c.syntax = 'pomo add <task> [options]'
