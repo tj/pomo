@@ -3,11 +3,70 @@
 
   Command-line application for the [Pomodoro](http://www.pomodorotechnique.com/) time management technique.
   
-## Features
+## Description
 
-  * Communicates via Growl 
-
+With Pomo you can add, remove, list, view, and start timing tasks all via the 
+command-line with a simple, slick interface. You are reminded of the remaining 
+time on a task via Growl. These notifications appear half-way, at the 5 minute point, 
+and when the task duration has expired. 
+  
 ## Examples
+
+View global or command specific help:
+    $ pomo help
+    $ pomo help add
+    $ pomo help remove
+
+Get started by adding a task:
+    $ pomo add "Fix IE stying issues"
+    
+And another:
+    $ pomo add "Destroy IE" --description "because IE is terrible"
+    
+List your tasks:
+    $ pomo list
+        0. Fix IE stying issues                : 25 minutes
+        1. Destroy IE                          : 25 minutes
+
+Start the first task:
+    $ pomo start
+    Started Fix IE stying issues, you have 25 minutes :)
+    (=........................) 24 minutes remaining
+    
+Once you have completed the task, list again:
+    $ pomo list
+      √ 0. Fix IE stying issues                : 25 minutes
+        1. Destroy IE                          : 25 minutes
+        
+At any time mid-task you may terminate pomo via CTRL + C, at which time
+you may manually complete the task:
+    $ pomo complete first
+    $ pomo complete last
+    $ pomo complete 1
+    $ pomo complete 5
+        
+The next time you run `pomo start` the first incomplete task will start:
+    $ pomo start
+    
+Or choose a specific task:
+    $ pomo start first
+    $ pomo start last
+    $ pomo start 5
+    
+You may also remove tasks
+    $ pomo remove first
+    $ pomo remove last
+    $ pomo remove 2
+    $ pomo remove 1
+    $ pomo remove 6
+    $ pomo rm first
+    $ pomo rm last
+    
+View task details:
+    $ pomo view first
+    $ pomo view last
+    $ pomo view 5
+    $ pomo view 1
 
 ## License
 
