@@ -7,37 +7,49 @@ require 'pomo'
 
 program :version, Pomo::VERSION
 program :description, 'Pomodoro time management'
+
+list = Pomo::List.new '~/.pomo'
  
-command :start do |c|
-  c.syntax = 'pomo start [options]'
-  c.summary = ''
-  c.description = ''
-  c.example 'description', 'command example'
-  c.option '--some-switch', 'Some switch that does something'
+command :add do |c|
+  c.syntax = 'pomo add <task> [options]'
+  c.summary = 'Add a task'
+  c.description = 'Add a task to the current list of tasks'
+  c.example 'Adds the task "fix IE styling issues"', 'pomo add "fix IE styling issues"'
+  c.option '-d', '--description string', 'Add verbose task description'
   c.action do |args, options|
-    # Do something or c.when_called Pomo::Commands::Start
+   task = Pomo::Task.new(args.shift, options.__hash__)
+   list << task
+   list.save
+   say "Task #{task} added"
   end
 end
 
 command :remove do |c|
-  c.syntax = 'pomo remove [options]'
-  c.summary = ''
-  c.description = ''
-  c.example 'description', 'command example'
-  c.option '--some-switch', 'Some switch that does something'
+  c.syntax = 'pomo [remove|rm] <number> [options]'
+  c.summary = 'Remove a task'
+  c.description = 'Remove a task, given the task <number>'
   c.action do |args, options|
-    # Do something or c.when_called Pomo::Commands::Remove
+   list.tasks.each_with_index do |task, i|
+     if i == args.first.to_i
+       list.tasks.delete_at i
+       say "Removed #{task}"
+     end
+   end
+   list.save
+  end
+end
+alias_command :rm, :remove
+alias_command :'remove first', :remove, '0'
+alias_command :'remove last', :remove, list.tasks.length - 1
+
+command :list do |c|
+  c.syntax = 'pomo list [options]'
+  c.description = 'List all tasks'
+  c.action do |args, options|
+   list.tasks.each_with_index do |task, i|
+     say '%2d. %s' % [i, task.to_s]
+   end
   end
 end
 
-command :add do |c|
-  c.syntax = 'pomo add [options]'
-  c.summary = ''
-  c.description = ''
-  c.example 'description', 'command example'
-  c.option '--some-switch', 'Some switch that does something'
-  c.action do |args, options|
-    # Do something or c.when_called Pomo::Commands::Add
-  end
-end
 

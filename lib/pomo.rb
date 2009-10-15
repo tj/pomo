@@ -21,5 +21,8 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #++
 
+require 'yaml'
 require 'growl'
+require 'pomo/list'
+require 'pomo/task'
 require 'pomo/version'
