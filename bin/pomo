@@ -7,6 +7,7 @@ require 'pomo'
 
 program :version, Pomo::VERSION
 program :description, 'Pomodoro time management'
+program :int_message, "\nTerminated pomodoro; any tasks which were running will not be marked as complete"
 
 list = Pomo::List.new '~/.pomo'
  
@@ -19,7 +20,6 @@ command :start do |c|
     say "Started #{task}, you have #{task.length} minutes :)"
     task.start
     list.save
-    p list.tasks
   end
 end
  
@@ -56,6 +56,20 @@ end
 alias_command :rm, :remove
 alias_command :'remove first', :remove, '0'
 alias_command :'remove last', :remove, list.tasks.length - 1
+
+command :view do |c|
+  c.syntax = 'pomo view [number] [options]'
+  c.summary = 'View a task'
+  c.description = 'View verbose information for the given task [number] or the first task'
+  c.action do |args, options|
+    if task = list.tasks.at(args.first ? args.first.to_i : 0)
+      format = "%15s : %s\n"
+      say format % ['name', task.name]
+      say format % ['length', "#{task.length} minutes"]
+      say format % ['description', task.description || '...']
+    end
+  end
+end
 
 command :list do |c|
   c.syntax = 'pomo list [options]'
