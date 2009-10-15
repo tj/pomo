@@ -10,6 +10,17 @@ program :description, 'Pomodoro time management'
 
 list = Pomo::List.new '~/.pomo'
  
+command :start do |c|
+  c.syntax = 'pomo start [number] [options]'
+  c.summary = 'Start a task'
+  c.description = 'Start a task, given the task [number] or the first task'
+  c.action do |args, options|
+    task = list.tasks.at(args.first ? args.first.to_i : 0)
+    say "Started #{task}, you have #{task.length} minutes :)"
+    task.start
+  end
+end
+ 
 command :add do |c|
   c.syntax = 'pomo add <task> [options]'
   c.summary = 'Add a task'
@@ -17,7 +28,7 @@ command :add do |c|
   c.example 'Adds the task "fix IE styling issues"', 'pomo add "fix IE styling issues"'
   c.example 'Add a task with 60 minute limit', 'pomo add "create executable" --length 60'
   c.option '-d', '--description string', 'Add verbose task description'
-  c.option '-l', '--length minutes', 'Change the default length in minutes'
+  c.option '-l', '--length minutes', Integer, 'Change the default length in minutes'
   c.action do |args, options|
    task = Pomo::Task.new(args.shift, options.__hash__)
    list << task
@@ -53,5 +64,7 @@ command :list do |c|
    end
   end
 end
+
+
 
 

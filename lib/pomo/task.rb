@@ -2,6 +2,12 @@
 module Pomo
   class Task
     
+    #--
+    # Mixins
+    #++
+    
+    include Growl
+    
     ##
     # Task name.
     
@@ -25,6 +31,23 @@ module Pomo
       @name = name or raise '<task> required'
       @description = options.delete :description
       @length = options.fetch :length, 25
+    end
+    
+    ##
+    # Start timing the task.
+    
+    def start
+      complete_message = "time is up, complete #{self} yet?"
+      progress (0..length).to_a.reverse, :format => "(:progress_bar) :remaining minutes remaining", :complete_message => complete_message do |remaining|
+        if remaining == length / 2
+          notify_info "#{remaining} minutes remaining, half way there!"
+        elsif remaining == 5
+          notify_info "5 minutes remaining"
+        end
+        sleep 1
+        { :remaining => remaining }
+      end
+      notify_warning complete_message
     end
     
   end
