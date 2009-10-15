@@ -10,7 +10,7 @@ module Pomo
     ##
     # Task array.
     
-    attr_reader :tasks
+    attr_accessor :tasks
     
     ##
     # Initialize with _path_.

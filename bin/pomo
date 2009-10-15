@@ -61,6 +61,17 @@ alias_command :rm, :remove
 alias_command :'remove first', :remove, '0'
 alias_command :'remove last', :remove, list.tasks.length - 1
 
+command :'remove all' do |c|
+  c.syntax = 'pomo remove all'
+  c.description = 'Remove all tasks'
+  c.action do 
+   list.tasks = []
+   list.save
+   say "Tasks removed"
+  end
+end
+alias_command :'rm all', :'remove all'
+
 command :view do |c|
   c.syntax = 'pomo view [number] [options]'
   c.summary = 'View a task'
