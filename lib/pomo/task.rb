@@ -31,6 +31,14 @@ module Pomo
       @name = name or raise '<task> required'
       @description = options.delete :description
       @length = options.fetch :length, 25
+      @complete = false
+    end
+    
+    ##
+    # Check if the task has been completed.
+    
+    def complete?
+      @complete
     end
     
     ##
@@ -47,6 +55,7 @@ module Pomo
         sleep 1
         { :remaining => remaining }
       end
+      @complete = true
       notify_warning complete_message
     end
     

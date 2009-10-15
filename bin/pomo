@@ -18,6 +18,8 @@ command :start do |c|
     task = list.tasks.at(args.first ? args.first.to_i : 0)
     say "Started #{task}, you have #{task.length} minutes :)"
     task.start
+    list.save
+    p list.tasks
   end
 end
  
@@ -60,7 +62,7 @@ command :list do |c|
   c.description = 'List all tasks'
   c.action do |args, options|
    list.tasks.each_with_index do |task, i|
-     say '%2d. %-35s : %d minutes' % [i, task.to_s, task.length]
+     say ' %s %2d. %-35s : %d minutes' % [task.complete? ? '√' : ' ', i, task.to_s, task.length]
    end
   end
 end
