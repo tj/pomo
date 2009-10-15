@@ -1,4 +1,9 @@
 
+0.0.4 / 2009-10-15
+==================
+
+  * Added / implemented selection api via Pomo::List#find
+
 0.0.3 / 2009-10-15
 ==================
 
