@@ -17,6 +17,7 @@ command :start do |c|
   c.description = 'Start a task, given the task [number] or the first task'
   c.action do |args, options|
     task = list.tasks.at(args.first ? args.first.to_i : 0)
+    abort 'task already completed' if task.complete?
     say "Started #{task}, you have #{task.length} minutes :)"
     task.start
     list.save
