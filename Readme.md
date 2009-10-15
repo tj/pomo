@@ -51,7 +51,9 @@ you may manually complete the task:
     $ pomo complete first
     $ pomo complete last
     $ pomo complete 1
-    $ pomo complete 5
+    $ pomo complete all
+    $ pomo complete incomplete
+    $ pomo complete 5..7
         
 The next time you run `pomo start` the first incomplete task will start:
     $ pomo start
@@ -68,13 +70,14 @@ You may also remove tasks
     $ pomo remove 1
     $ pomo remove 6
     $ pomo rm first
-    $ pomo rm last
+    $ pomo rm 2..5
+    $ pomo rm 1..-1
     
 View task details:
     $ pomo view first
     $ pomo view last
     $ pomo view 5
-    $ pomo view 1
+    $ pomo view 1 2 3
 
 Remove all tasks:
     $ pomo remove all
