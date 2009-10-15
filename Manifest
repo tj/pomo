@@ -1,4 +1,5 @@
 History.md
+Manifest
 Rakefile
 Readme.md
 bin/pomo
@@ -6,10 +7,10 @@ lib/pomo.rb
 lib/pomo/list.rb
 lib/pomo/task.rb
 lib/pomo/version.rb
+pomo.gemspec
 spec/pomo_spec.rb
 spec/spec.opts
 spec/spec_helper.rb
 tasks/docs.rake
 tasks/gemspec.rake
 tasks/spec.rake
-Manifest

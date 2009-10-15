@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.email = %q{tj@vision-media.ca}
   s.executables = ["pomo"]
   s.extra_rdoc_files = ["bin/pomo", "lib/pomo.rb", "lib/pomo/list.rb", "lib/pomo/task.rb", "lib/pomo/version.rb", "tasks/docs.rake", "tasks/gemspec.rake", "tasks/spec.rake"]
-  s.files = ["History.md", "Rakefile", "Readme.md", "bin/pomo", "lib/pomo.rb", "lib/pomo/list.rb", "lib/pomo/task.rb", "lib/pomo/version.rb", "spec/pomo_spec.rb", "spec/spec.opts", "spec/spec_helper.rb", "tasks/docs.rake", "tasks/gemspec.rake", "tasks/spec.rake", "Manifest", "pomo.gemspec"]
+  s.files = ["History.md", "Manifest", "Rakefile", "Readme.md", "bin/pomo", "lib/pomo.rb", "lib/pomo/list.rb", "lib/pomo/task.rb", "lib/pomo/version.rb", "pomo.gemspec", "spec/pomo_spec.rb", "spec/spec.opts", "spec/spec_helper.rb", "tasks/docs.rake", "tasks/gemspec.rake", "tasks/spec.rake"]
   s.homepage = %q{http://github.com/visionmedia/pomo}
   s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "Pomo", "--main", "Readme.md"]
   s.require_paths = ["lib"]
