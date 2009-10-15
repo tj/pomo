@@ -82,5 +82,3 @@ command :list do |c|
 end
 
 
-
-

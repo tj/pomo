@@ -52,7 +52,7 @@ module Pomo
         elsif remaining == 5
           notify_info "5 minutes remaining"
         end
-        sleep 1
+        sleep 60
         { :remaining => remaining }
       end
       @complete = true
