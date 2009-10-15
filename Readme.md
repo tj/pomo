@@ -68,6 +68,10 @@ View task details:
     $ pomo view 5
     $ pomo view 1
 
+Remove all tasks:
+    $ pomo remove all
+    $ pomo rm all
+
 ## License
 
 (The MIT License)
