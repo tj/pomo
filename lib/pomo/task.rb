@@ -25,6 +25,11 @@ module Pomo
     attr_reader :description
     
     ##
+    # Task completion bool.
+    
+    attr_accessor :complete
+    
+    ##
     # Initialize with _name_ and _options_.
     
     def initialize name = nil, options = {}
@@ -38,7 +43,7 @@ module Pomo
     # Check if the task has been completed.
     
     def complete?
-      @complete
+      complete
     end
     
     ##

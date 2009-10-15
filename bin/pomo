@@ -76,6 +76,21 @@ end
 alias_command :'view first', :view, '0'
 alias_command :'view last', :view, list.tasks.length - 1
 
+command :complete do |c|
+  c.syntax = 'pomo complete [number] [options]'
+  c.summary = 'Mark a task as completed'
+  c.description = 'Mark the given task [number] or the first task to complete'
+  c.action do |args, options|
+    if task = list.tasks.at(args.first ? args.first.to_i : 0)
+      task.complete = true
+      list.save
+      say "Completed #{task}"
+    end
+  end
+end
+alias_command :'complete first', :complete, '0'
+alias_command :'complete last', :complete, list.tasks.length - 1
+
 command :list do |c|
   c.syntax = 'pomo list [options]'
   c.description = 'List all tasks'
