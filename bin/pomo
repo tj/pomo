@@ -1,0 +1,43 @@
+#!/usr/bin/env ruby
+
+$:.unshift File.dirname(__FILE__) + '/../lib' 
+require 'rubygems'
+require 'commander/import'
+require 'pomo'
+
+program :version, Pomo::VERSION
+program :description, 'Pomodoro time management'
+ 
+command :start do |c|
+  c.syntax = 'pomo start [options]'
+  c.summary = ''
+  c.description = ''
+  c.example 'description', 'command example'
+  c.option '--some-switch', 'Some switch that does something'
+  c.action do |args, options|
+    # Do something or c.when_called Pomo::Commands::Start
+  end
+end
+
+command :remove do |c|
+  c.syntax = 'pomo remove [options]'
+  c.summary = ''
+  c.description = ''
+  c.example 'description', 'command example'
+  c.option '--some-switch', 'Some switch that does something'
+  c.action do |args, options|
+    # Do something or c.when_called Pomo::Commands::Remove
+  end
+end
+
+command :add do |c|
+  c.syntax = 'pomo add [options]'
+  c.summary = ''
+  c.description = ''
+  c.example 'description', 'command example'
+  c.option '--some-switch', 'Some switch that does something'
+  c.action do |args, options|
+    # Do something or c.when_called Pomo::Commands::Add
+  end
+end
+
