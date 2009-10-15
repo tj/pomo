@@ -15,6 +15,10 @@ command :start do |c|
   c.syntax = 'pomo start [number] [options]'
   c.summary = 'Start a task'
   c.description = 'Start a task, given the task [number] or the first task'
+  c.example 'Start the first task', 'pomo start'
+  c.example 'Start the first task', 'pomo start 0'
+  c.example 'Start the first task', 'pomo start first'
+  c.example 'Start the fifth task', 'pomo start 5'
   c.action do |args, options|
     if task = list.tasks.at(args.first ? args.first.to_i : 0)
       abort 'task already completed' if task.complete?
@@ -47,6 +51,10 @@ command :remove do |c|
   c.syntax = 'pomo [remove|rm] <number> [options]'
   c.summary = 'Remove a task'
   c.description = 'Remove a task, given the task <number>'
+  c.example 'Remove the first task', 'pomo remove first'
+  c.example 'Remove the last task', 'pomo remove last'
+  c.example 'Remove the fifth task', 'pomo remove 5'
+  c.example 'Remove the fifth task', 'pomo rm 5'
   c.action do |args, options|
    list.tasks.each_with_index do |task, i|
      if i == args.first.to_i
@@ -76,6 +84,9 @@ command :view do |c|
   c.syntax = 'pomo view [number] [options]'
   c.summary = 'View a task'
   c.description = 'View verbose information for the given task [number] or the first task'
+  c.example 'View the first task', 'pomo view first'
+  c.example 'View the last task', 'pomo view last'
+  c.example 'View the fifth task', 'pomo view 5'
   c.action do |args, options|
     if task = list.tasks.at(args.first ? args.first.to_i : 0)
       format = "%15s : %s\n"
@@ -92,6 +103,9 @@ command :complete do |c|
   c.syntax = 'pomo complete [number] [options]'
   c.summary = 'Mark a task as completed'
   c.description = 'Mark the given task [number] or the first task to complete'
+  c.example 'Mark first task as complete', 'pomo complete first'
+  c.example 'Mark last task as complete', 'pomo complete last'
+  c.example 'Mark fifth task as complete', 'pomo complete 5'
   c.action do |args, options|
     if task = list.tasks.at(args.first ? args.first.to_i : 0)
       task.complete = true
@@ -106,6 +120,7 @@ alias_command :'complete last', :complete, list.tasks.length - 1
 command :list do |c|
   c.syntax = 'pomo list [options]'
   c.description = 'List all tasks'
+  c.example 'List all tasks', 'pomo list'
   c.action do |args, options|
    list.tasks.each_with_index do |task, i|
      say ' %s %2d. %-35s : %d minutes' % [task.complete? ? '√' : ' ', i, task.to_s, task.length]
