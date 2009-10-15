@@ -12,7 +12,7 @@ program :int_message, "\nTerminated pomo" \
                       "\n  * manually complete a task with `$ pomo complete <task>`"
 
 list = Pomo::List.new '~/.pomo'
- 
+
 command :start do |c|
   c.syntax = 'pomo start [number] [options]'
   c.summary = 'Start a task'
@@ -22,11 +22,12 @@ command :start do |c|
   c.example 'Start the first task', 'pomo start first'
   c.example 'Start the fifth task', 'pomo start 5'
   c.action do |args, options|
-    if task = list.tasks.at(args.first ? args.first.to_i : 0)
+    list.find(*args) do |task, i|
       abort 'task already completed' if task.complete?
       say "Started #{task}, you have #{task.length} minutes :)"
       task.start
       list.save
+      break
     end
   end
 end

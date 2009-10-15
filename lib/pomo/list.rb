@@ -22,6 +22,19 @@ module Pomo
     end
     
     ##
+    # Find tasks by _args_, iterating with _block_.
+    
+    def find *args, &block
+      if args.empty?
+        yield tasks.first, 0
+      else
+        tasks.each_with_index do |task, i|
+          yield task, i if args.any? { |a| a.to_i == i }
+        end
+      end
+    end
+    
+    ##
     # Add _task_ to the list in memory (requires saving).
     
     def add task
