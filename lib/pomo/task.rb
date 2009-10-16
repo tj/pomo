@@ -56,7 +56,7 @@ module Pomo
     # Start timing the task.
     
     def start
-      complete_message = "time is up! hope you are finished #{self} after #{length} minutes :)"
+      complete_message = "time is up! hope you are finished #{self}"
       progress (0..length).to_a.reverse, :format => "(:progress_bar) :remaining minutes remaining", :complete_message => complete_message do |remaining|
         if remaining == length / 2
           notify_info "#{remaining} minutes remaining, half way there!"

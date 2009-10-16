@@ -57,6 +57,11 @@ Once you have completed the task, list again:
       √ 0. Fix IE stying issues                : 25 minutes
         1. Destroy IE                          : 25 minutes
         
+Or take a break:
+    $ pomo break
+    $ pomo break 10
+    $ pomo break --length 10
+        
 List only remaining tasks:
     $ pomo list --incomplete
         1. Destroy IE                          : 25 minutes

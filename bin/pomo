@@ -57,10 +57,25 @@ command :add do |c|
   c.option '-d', '--description string', 'Add verbose task description'
   c.option '-l', '--length minutes', Integer, 'Change the default length in minutes'
   c.action do |args, options|
-   task = Pomo::Task.new(args.shift, options.__hash__)
-   list << task
-   list.save
-   say "Task #{task} added"
+    task = Pomo::Task.new(args.shift, options.__hash__)
+    list << task
+    list.save
+    say "Task #{task} added"
+  end
+end
+
+command :break do |c|
+  c.syntax = 'pomo break [length] [options]'
+  c.summary = 'Take a break'
+  c.description = 'Take a break, defaults to 5 minutes or [length] or --length'
+  c.example 'Take a five minute break', 'pomo break'
+  c.example 'Take a 30 minute break', 'pomo break 30'
+  c.example 'Take a 30 minute break', 'pomo break --length 30'
+  c.option '-l', '--length minutes', Integer, 'Change the default length in minutes'
+  c.action do |args, options|
+    options.default :length => args.first ? args.first.to_i : 5
+    task = Pomo::Task.new('Break time', options.__hash__)
+    task.start
   end
 end
 
