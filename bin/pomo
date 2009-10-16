@@ -84,6 +84,7 @@ command :remove do |c|
   end
 end
 alias_command :rm, :remove
+alias_command :clear, :remove, 'all'
 
 command :view do |c|
   c.syntax = 'pomo view [task ...] [options]'
