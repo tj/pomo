@@ -29,6 +29,8 @@ program :int_message, "\nTerminated pomo" \
 
 list = Pomo::List.new '~/.pomo'
 
+default_command :list
+
 command :start do |c|
   c.syntax = 'pomo start [task] [options]'
   c.summary = 'Start a task'

@@ -42,7 +42,7 @@ Get started by adding a task:
 And another:
     $ pomo add "Destroy IE" --description "because IE is terrible"
     
-List your tasks:
+List your tasks (or use `pomo` which defaults to `pomo list`):
     $ pomo list
         0. Fix IE stying issues                : 25 minutes
         1. Destroy IE                          : 25 minutes
