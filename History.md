@@ -1,4 +1,11 @@
 
+0.0.5 / 2009-10-16
+==================
+
+  * Added `pomo break`
+  * Added `pomo clear` alias of `pomo remove all`
+  * Default `pomo` to `pomo list`
+
 0.0.4 / 2009-10-15
 ==================
 
