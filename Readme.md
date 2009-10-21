@@ -107,6 +107,11 @@ Remove all tasks:
     $ pomo remove all
     $ pomo rm all
     
+Or if you prefer, create a directory specific task list. Pomo will
+auto-detect _./.pomo_ in this directory, and utilize it's contents.
+    $ pomo init
+
+    
 ## License
 
 (The MIT License)
