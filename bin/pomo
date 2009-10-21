@@ -49,6 +49,31 @@ command :start do |c|
     end
   end
 end
+
+command :import do |c|
+  c.syntax = 'pomo import <user> <project> [options]'
+  c.summary = 'Import Github project issues'
+  c.description = 'Import Github project issues which have not yet been closed'
+  c.action do |args, options|
+    begin
+      require 'octopi'
+    rescue LoadError
+      abort 'the octopi gem is required to import issues from Github'
+    else
+      user = args.shift or raise('Github <user> is required')
+      project = args.shift or raise('Github <project> is required')
+      if repo = Octopi::Repository.find(user, project)
+        say "Importing items from http://github.com/#{user}/#{project}"
+        repo.issues.select { |i| not i.closed_at }.each do |issue|
+          task = Pomo::GithubTask.new issue.title, :username => user, :project => project, :description => issue.body
+          list << task
+          say "Added #{task}"
+        end
+        list.save
+      end
+    end
+  end
+end
  
 command :add do |c|
   c.syntax = 'pomo add <task> [options]'
@@ -148,7 +173,7 @@ command :list do |c|
     list.tasks.each_with_index do |task, i|
       next if options.complete && !task.complete?
       next if options.incomplete && task.complete?
-      say ' %s %2d. %-35s : %d minutes' % [task.complete? ? '√' : ' ', i, task.to_s, task.length]
+      say ' %s %2d. %-45s : %d minutes' % [task.complete? ? '√' : ' ', i, task.to_s, task.length]
     end
   end
 end
