@@ -27,9 +27,20 @@ program :int_message, "\nTerminated pomo" \
                       "\n  * previously running tasks not marked as complete" \
                       "\n  * manually complete a task with `$ pomo complete <task>`"
 
-list = Pomo::List.new '~/.pomo'
+list = Pomo::List.new File.exists?('.pomo') ? '.pomo' : '~/.pomo'
 
 default_command :list
+
+command :init do |c|
+  c.syntax = 'pomo init [options]'
+  c.description = 'Initialize pomo in the current directory'
+  c.action do |args, options|
+    Pomo::List.new '.pomo'
+    say "Initialized at `./.pomo`"
+    say "  - Any commands run while in this directory will reference this file for tasks"
+    say "  - To remove simply execute `rm .pomo`"
+  end  
+end
 
 command :start do |c|
   c.syntax = 'pomo start [task] [options]'
