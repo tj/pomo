@@ -76,7 +76,12 @@ command :import do |c|
       if repo = Octopi::Repository.find(user, project)
         say "Importing items from http://github.com/#{user}/#{project}"
         repo.issues.select { |i| not i.closed_at }.each do |issue|
-          task = Pomo::GithubTask.new issue.title, :username => user, :project => project, :description => issue.body
+          task = Pomo::GithubTask.new issue.title, 
+            :username => user,
+            :project => project,
+            :description => issue.body,
+            :labels => issue.labels,
+            :number => issue.number
           list << task
           say "  - Added #{task}"
         end
@@ -152,7 +157,12 @@ command :view do |c|
       format = "%15s : %s\n"
       say format % ['name', task.name]
       say format % ['length', "#{task.length} minutes"]
-      say format % ['description', task.description || '...']
+      say format % ['description', task.description] if task.description and not task.description.empty?
+      if task.github?
+        say format % ['labels', task.labels.join(', ')] if task.labels and not task.labels.empty?
+        say format % ['number', task.number ]
+        say format % ['uri', task.uri ]
+      end
     end
     say "\n"
   end
