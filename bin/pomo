@@ -78,7 +78,7 @@ command :import do |c|
         repo.issues.select { |i| not i.closed_at }.each do |issue|
           task = Pomo::GithubTask.new issue.title, :username => user, :project => project, :description => issue.body
           list << task
-          say "Added #{task}"
+          say "  - Added #{task}"
         end
         list.save
       end
@@ -98,7 +98,7 @@ command :add do |c|
     task = Pomo::Task.new(args.shift, options.__hash__)
     list << task
     list.save
-    say "Task #{task} added"
+    say "  - Added #{task}"
   end
 end
 
@@ -131,7 +131,7 @@ command :remove do |c|
   c.action do |args, options|
     list.find(*args) do |task, i|
       list.tasks -= [task]
-      say "Removed #{task}"
+      say "  - Removed #{task}"
     end
    list.save
   end
@@ -168,7 +168,7 @@ command :complete do |c|
   c.action do |args, options|
     list.find(*args) do |task, i|
       task.complete = true
-      say "Completed #{task}"
+      say "  - Completed #{task}"
     end
     list.save
   end
