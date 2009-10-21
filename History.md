@@ -1,3 +1,9 @@
+   
+0.1.0 / 2009-10-16
+==================
+
+  * Added `pomo import <user> <project>`
+  * Added Pomo::GithubTask
 
 0.0.5 / 2009-10-16
 ==================
