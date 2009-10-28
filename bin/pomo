@@ -191,11 +191,14 @@ command :list do |c|
   c.option '-c', '--complete', 'List only completed tasks'
   c.option '-i', '--incomplete', 'List only incompleted tasks'
   c.action do |args, options|
+    total = 0
     list.tasks.each_with_index do |task, i|
       next if options.complete && !task.complete?
       next if options.incomplete && task.complete?
       say ' %s %2d. %-45s : %d minutes' % [task.complete? ? '√' : ' ', i, task.to_s, task.length]
+      total += task.length
     end
+    say ' ' * 55 + '%d minutes' % total
   end
 end
 
