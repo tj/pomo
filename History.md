@@ -1,3 +1,10 @@
+
+0.2.0 / 2009-10-28
+==================
+
+  * Added several metadata related methods to Pomo::GithubTask
+  * Added `pomo init` for localized .pomo
+  * Normalized verbose messages
    
 0.1.0 / 2009-10-16
 ==================
