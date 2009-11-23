@@ -66,27 +66,23 @@ command :import do |c|
   c.summary = 'Import Github project issues'
   c.description = 'Import Github project issues which have not yet been closed'
   c.action do |args, options|
-    begin
-      require 'octopi'
-    rescue LoadError
-      abort 'the octopi gem is required to import issues from Github'
-    else
-      user = args.shift or raise('Github <user> is required')
-      project = args.shift or raise('Github <project> is required')
-      if repo = Octopi::Repository.find(user, project)
-        say "Importing items from http://github.com/#{user}/#{project}"
-        repo.issues.select { |i| not i.closed_at }.each do |issue|
-          task = Pomo::GithubTask.new issue.title, 
-            :username => user,
-            :project => project,
-            :description => issue.body,
-            :labels => issue.labels,
-            :number => issue.number
-          list << task
-          say "  - Added #{task}"
-        end
-        list.save
+    gem 'octopi', '>=0.2.1'
+    require 'octopi'
+    user = args.shift or raise('Github <user> is required')
+    project = args.shift or raise('Github <project> is required')
+    if repo = Octopi::Repository.find(:user => user, :name => project)
+      say "Importing items from http://github.com/#{user}/#{project}"
+      repo.issues.select { |i| not i.closed_at }.each do |issue|
+        task = Pomo::GithubTask.new issue.title, 
+          :username => user,
+          :project => project,
+          :description => issue.body,
+          :labels => issue.labels,
+          :number => issue.number
+        list << task
+        say "  - Added #{task}"
       end
+      list.save
     end
   end
 end
