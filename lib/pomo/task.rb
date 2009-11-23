@@ -11,17 +11,17 @@ module Pomo
     ##
     # Task name.
     
-    attr_reader :name
+    attr_accessor :name
     
     ##
     # Length in minutes.
     
-    attr_reader :length
+    attr_accessor :length
     
     ##
     # Verbose task description.
     
-    attr_reader :description
+    attr_accessor :description
     
     ##
     # Task completion bool.

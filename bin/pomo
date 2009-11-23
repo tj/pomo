@@ -103,6 +103,26 @@ command :add do |c|
   end
 end
 
+command :edit do |c|
+  c.syntax = 'pomo edit [task ...] [options]'
+  c.summary = 'Edit a task'
+  c.description = 'Change some of the values for a task'
+  c.example 'Changes the description for the first task', 'pomo edit first -d "fix IE styling issues"'
+  c.example 'Changes the description and length for the third task', 'pomo edit 3 -d "fix IE styling issues" -l 60'
+  c.option '-n', '--name string', 'Change the task name'
+  c.option '-d', '--description string', 'Change the task description'
+  c.option '-l', '--length minutes', Integer, 'Change the task length'
+  c.action do |args, options|
+    list.find(*args) do |task, i|
+      options.__hash__.each do |key, value|
+        task.send "#{key}=", value
+      end
+      say "  - Updated #{task}"
+    end
+    list.save
+  end
+end
+
 command :break do |c|
   c.syntax = 'pomo break [length] [options]'
   c.summary = 'Take a break'
@@ -180,6 +200,22 @@ command :complete do |c|
   end
 end
 
+command :incomplete do |c|
+  c.syntax = 'pomo incomplete [task ...] [options]'
+  c.summary = 'Mark a task as not completed'
+  c.description = 'Mark the given task(s) or the first task as not completed'
+  c.example 'Mark first task as not completed', 'pomo incomplete first'
+  c.example 'Mark last task as not completed', 'pomo incomplete last'
+  c.example 'Mark fifth task as not completed', 'pomo incomplete 5'
+  c.action do |args, options|
+    list.find(*args) do |task, i|
+      task.complete = false
+      say "  - #{task} marked as not complete"
+    end
+    list.save
+  end
+end
+
 command :list do |c|
   c.syntax = 'pomo list [options]'
   c.description = 'List all tasks'
@@ -197,5 +233,4 @@ command :list do |c|
     say ' ' * 55 + '%d minutes' % total
   end
 end
-
 
