@@ -1,4 +1,10 @@
 
+0.4.0 / 2009-11-23
+==================
+
+  * Added `pomo edit` [thanks noonat]
+  * Added `pomo incomplete` [thanks noonat]
+
 0.3.1 / 2009-11-23
 ==================
 
