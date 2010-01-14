@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{pomo}
-  s.version = "0.4.0"
+  s.version = "0.5.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
   s.authors = ["TJ Holowaychuk"]
-  s.date = %q{2009-11-23}
+  s.date = %q{2010-01-14}
   s.default_executable = %q{pomo}
   s.description = %q{Pomodoro time management for the command-line}
   s.email = %q{tj@vision-media.ca}
