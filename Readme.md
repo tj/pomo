@@ -54,7 +54,7 @@ Start the first task:
     
 Once you have completed the task, list again:
     $ pomo list
-      √ 0. Fix IE stying issues                : 25 minutes
+      ✓ 0. Fix IE stying issues                : 25 minutes
         1. Destroy IE                          : 25 minutes
         
 Or take a break:
@@ -68,7 +68,7 @@ List only remaining tasks:
         
 List only completed tasks:
     $ pomo list --complete
-      √ 0. Fix IE stying issues                : 25 minutes
+      ✓ 0. Fix IE stying issues                : 25 minutes
         
 At any time mid-task you may terminate pomo via CTRL + C, at which time
 you may manually complete the task:
