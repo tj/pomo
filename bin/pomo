@@ -51,7 +51,7 @@ command :start do |c|
   c.example 'Start the first task', 'pomo start first'
   c.example 'Start the fifth task', 'pomo start 5'
   c.action do |args, options|
-    args = ['incomplete'] if args.length.zero?
+    args = ['incomplete'] if args.empty?
     list.find(*args) do |task, i|
       abort 'task already completed' if task.complete?
       say "Started #{task}, you have #{task.length} minutes :)"
