@@ -1,4 +1,10 @@
 
+0.5.1 / 2010-01-19
+==================
+
+  * Fixed `pomo start`; starts the first incomplete task by default. Closes #3
+  * Progress bar outputs immediately with latest commander installed
+
 0.5.0 / 2010-01-14
 ==================
 
