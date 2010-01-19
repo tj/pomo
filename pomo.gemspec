@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{pomo}
-  s.version = "0.5.0"
+  s.version = "1.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
   s.authors = ["TJ Holowaychuk"]
-  s.date = %q{2010-01-14}
+  s.date = %q{2010-01-19}
   s.default_executable = %q{pomo}
   s.description = %q{Pomodoro time management for the command-line}
   s.email = %q{tj@vision-media.ca}
@@ -25,14 +25,14 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<commander>, [">= 4.0.0"])
+      s.add_runtime_dependency(%q<commander>, [">= 4.0.2"])
       s.add_runtime_dependency(%q<growl>, [">= 1.0.3"])
     else
-      s.add_dependency(%q<commander>, [">= 4.0.0"])
+      s.add_dependency(%q<commander>, [">= 4.0.2"])
       s.add_dependency(%q<growl>, [">= 1.0.3"])
     end
   else
-    s.add_dependency(%q<commander>, [">= 4.0.0"])
+    s.add_dependency(%q<commander>, [">= 4.0.2"])
     s.add_dependency(%q<growl>, [">= 1.0.3"])
   end
 end

@@ -1,5 +1,5 @@
 
-0.5.1 / 2010-01-19
+1.0.0 / 2010-01-19
 ==================
 
   * Fixed `pomo start`; starts the first incomplete task by default. Closes #3
