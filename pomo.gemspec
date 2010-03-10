@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{pomo}
-  s.version = "1.0.0"
+  s.version = "1.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
   s.authors = ["TJ Holowaychuk"]
-  s.date = %q{2010-01-19}
+  s.date = %q{2010-03-10}
   s.default_executable = %q{pomo}
   s.description = %q{Pomodoro time management for the command-line}
   s.email = %q{tj@vision-media.ca}
@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "Pomo", "--main", "Readme.md"]
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{pomo}
-  s.rubygems_version = %q{1.3.5}
+  s.rubygems_version = %q{1.3.6}
   s.summary = %q{Pomodoro time management for the command-line}
 
   if s.respond_to? :specification_version then
