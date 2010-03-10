@@ -1,4 +1,3 @@
-
 # Pomo  
 
   Command-line application for the [Pomodoro](http://www.pomodorotechnique.com/) time management technique.
@@ -108,7 +107,7 @@ Remove all tasks:
     $ pomo rm all
     
 Or if you prefer, create a directory specific task list. Pomo will
-auto-detect _./.pomo_ in this directory, and utilize it's contents.
+auto-detect _./.pomo_ in this directory, and utilize its contents.
     $ pomo init
 
     
