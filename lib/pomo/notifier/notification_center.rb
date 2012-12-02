@@ -2,10 +2,10 @@
 module Pomo
   class Notifier
     class NotificationCenter
-      def notify(message, subtitle = '', type = nil)
+      def notify(message, opts = {})
         title = 'Pomo'
 
-        TerminalNotifier.notify message, :title => title, :subtitle => subtitle
+        TerminalNotifier.notify message, :title => title, :subtitle => opts[:header]
       end
     end
 

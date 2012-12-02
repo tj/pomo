@@ -60,15 +60,15 @@ module Pomo
         :complete_message => complete_message
       ) do |remaining|
         if remaining == length / 2
-          notifier.notify "Half way there!", "#{remaining} minutes remaining"
+          notifier.notify "Half way there!", :header => "#{remaining} minutes remaining"
         elsif remaining == 5
-          notifier.notify "Almost there!", "5 minutes remaining"
+          notifier.notify "Almost there!", :header => "5 minutes remaining"
         end
         sleep 60
         { :remaining => remaining }
       end
       @complete = true
-      notifier.notify "Hope you are finished #{self}", "Time is up!", :warning
+      notifier.notify "Hope you are finished #{self}", :header => "Time is up!", :type => :warning
     end
 
   end

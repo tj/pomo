@@ -2,11 +2,10 @@
 module Pomo
   class Notifier
     class Growl
-      def notify(message, subtitle = '', type = nil)
-        title = 'Pomo'
-        full_message = [subtitle, message].join(' ')
+      def notify(message, opts = {})
+        full_message = [opts[:header], opts[:message]].join(' ').lstrip
 
-        if type.equal? :warning
+        if opts[:type].equal? :warning
           Growl.notify_warning full_message
         else
           Growl.notify_info full_message

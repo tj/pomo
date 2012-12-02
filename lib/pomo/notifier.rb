@@ -27,8 +27,8 @@ module Pomo
 
     ##
     # Send message to notification library.
-    def notify(message, subtitle = '', type = nil)
-      @notifier.notify(message, subtitle, type)
+    def notify(message, opts = {})
+      @notifier.notify(message, opts)
     end
 
   end
