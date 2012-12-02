@@ -25,18 +25,18 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<commander>, [">= 4.0.2"])
+      s.add_runtime_dependency(%q<commander>, [">= 4.1.2"])
       s.add_runtime_dependency(%q<growl>, [">= 1.0.3"])             if /darwin/ =~ RUBY_PLATFORM
       s.add_runtime_dependency(%q<terminal-notifier>, [">= 1.4.2"]) if /darwin/ =~ RUBY_PLATFORM
       s.add_runtime_dependency(%q<libnotify>, [">= 0.8.0"])         if /linux/ =~ RUBY_PLATFORM
     else
-      s.add_dependency(%q<commander>, [">= 4.0.2"])
+      s.add_dependency(%q<commander>, [">= 4.1.2"])
       s.add_dependency(%q<growl>, [">= 1.0.3"])             if /darwin/ =~ RUBY_PLATFORM
       s.add_dependency(%q<terminal-notifier>, [">= 1.4.2"]) if /darwin/ =~ RUBY_PLATFORM
       s.add_dependency(%q<libnotify>, [">= 0.8.0"])         if /linux/ =~ RUBY_PLATFORM
     end
   else
-    s.add_dependency(%q<commander>, [">= 4.0.2"])
+    s.add_dependency(%q<commander>, [">= 4.1.2"])
     s.add_dependency(%q<growl>, [">= 1.0.3"])             if /darwin/ =~ RUBY_PLATFORM
     s.add_dependency(%q<terminal-notifier>, [">= 1.4.2"]) if /darwin/ =~ RUBY_PLATFORM
     s.add_dependency(%q<libnotify>, [">= 0.8.0"])         if /linux/ =~ RUBY_PLATFORM
