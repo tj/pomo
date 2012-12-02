@@ -24,4 +24,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency("terminal-notifier", [">= 1.4.2"]) if /darwin/ =~ RUBY_PLATFORM
   gem.add_dependency("growl", [">= 1.0.3"])             if /darwin/ =~ RUBY_PLATFORM
   gem.add_dependency("libnotify", [">= 0.8.0"])         if /linux/ =~ RUBY_PLATFORM
+
+  gem.add_development_dependency("rspec", "~> 2.12")
 end
