@@ -11,8 +11,8 @@ Gem::Specification.new do |s|
   s.description = %q{Pomodoro time management for the command-line}
   s.email = %q{tj@vision-media.ca}
   s.executables = ["pomo"]
-  s.extra_rdoc_files = ["bin/pomo", "lib/pomo.rb", "lib/pomo/github_task.rb", "lib/pomo/list.rb", "lib/pomo/task.rb", "lib/pomo/version.rb", "tasks/docs.rake", "tasks/gemspec.rake", "tasks/spec.rake"]
-  s.files = ["History.md", "Manifest", "Rakefile", "Readme.md", "bin/pomo", "lib/pomo.rb", "lib/pomo/github_task.rb", "lib/pomo/list.rb", "lib/pomo/task.rb", "lib/pomo/version.rb", "pomo.gemspec", "spec/pomo_spec.rb", "spec/spec.opts", "spec/spec_helper.rb", "tasks/docs.rake", "tasks/gemspec.rake", "tasks/spec.rake"]
+  s.extra_rdoc_files = ["bin/pomo", "lib/pomo.rb", "lib/pomo/github_task.rb", "lib/pomo/list.rb", "lib/pomo/notifier.rb", "lib/pomo/task.rb", "lib/pomo/version.rb", "tasks/docs.rake", "tasks/gemspec.rake", "tasks/spec.rake"]
+  s.files = ["History.md", "Manifest", "Rakefile", "Readme.md", "bin/pomo", "lib/pomo.rb", "lib/pomo/github_task.rb", "lib/pomo/list.rb", "lib/pomo/notifier.rb", "lib/pomo/task.rb", "lib/pomo/version.rb", "pomo.gemspec", "spec/pomo_spec.rb", "spec/spec.opts", "spec/spec_helper.rb", "tasks/docs.rake", "tasks/gemspec.rake", "tasks/spec.rake"]
   s.homepage = %q{http://github.com/visionmedia/pomo}
   s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "Pomo", "--main", "Readme.md"]
   s.require_paths = ["lib"]
@@ -26,13 +26,19 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<commander>, [">= 4.0.2"])
-      s.add_runtime_dependency(%q<growl>, [">= 1.0.3"])
+      s.add_runtime_dependency(%q<growl>, [">= 1.0.3"])             if /darwin/ =~ RUBY_PLATFORM
+      s.add_runtime_dependency(%q<terminal-notifier>, [">= 1.4.2"]) if /darwin/ =~ RUBY_PLATFORM
+      s.add_runtime_dependency(%q<libnotify>, [">= 0.8.0"])         if /linux/ =~ RUBY_PLATFORM
     else
       s.add_dependency(%q<commander>, [">= 4.0.2"])
-      s.add_dependency(%q<growl>, [">= 1.0.3"])
+      s.add_dependency(%q<growl>, [">= 1.0.3"])             if /darwin/ =~ RUBY_PLATFORM
+      s.add_dependency(%q<terminal-notifier>, [">= 1.4.2"]) if /darwin/ =~ RUBY_PLATFORM
+      s.add_dependency(%q<libnotify>, [">= 0.8.0"])         if /linux/ =~ RUBY_PLATFORM
     end
   else
     s.add_dependency(%q<commander>, [">= 4.0.2"])
-    s.add_dependency(%q<growl>, [">= 1.0.3"])
+    s.add_dependency(%q<growl>, [">= 1.0.3"])             if /darwin/ =~ RUBY_PLATFORM
+    s.add_dependency(%q<terminal-notifier>, [">= 1.4.2"]) if /darwin/ =~ RUBY_PLATFORM
+    s.add_dependency(%q<libnotify>, [">= 0.8.0"])         if /linux/ =~ RUBY_PLATFORM
   end
 end
