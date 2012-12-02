@@ -13,31 +13,22 @@ end
 module Pomo
   class Notifier
 
-    ##
-    # Send message to notification library.
-    def self.notify(message, subtitle = '', type = nil)
-      title = 'Pomo'
-      full_message = [subtitle, message].join(' ')
-
+    def initialize
       if MACOS
         if (10.8 <= MACOS_VERSION)
-          TerminalNotifier.notify message, :title => title, :subtitle => subtitle
+          @notifier = Pomo::Notifier::NotificationCenter.new
         else
-          notify_growl(type, full_message)
+          @notifier = Pomo::Notifier::Growl.new
         end
       else
-        Libnotify.show :body => full_message, :summary => title
+        @notifier = Pomo::Notifier::Libnotify.new
       end
     end
 
-    private
-
-    def self.notify_growl(type, message)
-      if type.equal? :warning
-        Growl.notify_warning message
-      else
-        Growl.notify_info message
-      end
+    ##
+    # Send message to notification library.
+    def notify(message, subtitle = '', type = nil)
+      @notifier.notify(message, subtitle, type)
     end
 
   end
