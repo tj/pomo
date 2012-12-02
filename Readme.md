@@ -60,9 +60,9 @@ Taken from `pomo help`:
         Started Fix IE stying issues, you have 25 minutes :)
         (=........................) 24 minutes remaining
     
-  * Once you have completed the task, list again:
+  * Once you have completed the task, list again (alternatively `pomo ls`):
 
-        $ pomo list
+        $ pomo ls
           ✓ 0. Fix IE stying issues                : 25 minutes
             1. Destroy IE                          : 25 minutes
         
@@ -74,12 +74,12 @@ Taken from `pomo help`:
         
   * List only remaining tasks:
 
-        $ pomo list --incomplete
+        $ pomo ls--incomplete
             1. Destroy IE                          : 25 minutes
         
   * List only completed tasks:
 
-        $ pomo list --complete
+        $ pomo ls --complete
           ✓ 0. Fix IE stying issues                : 25 minutes
 
   * At any time mid-task you may terminate pomo via CTRL + C, at which

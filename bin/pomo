@@ -220,7 +220,7 @@ command :incomplete do |c|
 end
 
 command :list do |c|
-  c.syntax = 'pomo list [options]'
+  c.syntax = 'pomo [list|ls] [options]'
   c.description = 'List all tasks'
   c.example 'List all tasks', 'pomo list'
   c.option '-c', '--complete', 'List only completed tasks'
@@ -236,4 +236,5 @@ command :list do |c|
     say ' ' * 55 + '%d minutes' % total
   end
 end
+alias_command :ls, :list
 
