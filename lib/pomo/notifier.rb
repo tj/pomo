@@ -23,14 +23,20 @@ module Pomo
         if (10.8 <= MACOS_VERSION)
           TerminalNotifier.notify message, :title => title, :subtitle => subtitle
         else
-          if type.equal? :warning
-            Growl.notify_warning full_message
-          else
-            Growl.notify_info full_message
-          end
+          notify_growl(type, full_message)
         end
       else
         Libnotify.show :body => full_message, :summary => title
+      end
+    end
+
+    private
+
+    def self.notify_growl(type, message)
+      if type.equal? :warning
+        Growl.notify_warning message
+      else
+        Growl.notify_info message
       end
     end
 
