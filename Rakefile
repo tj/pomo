@@ -1,17 +1,8 @@
+require "rspec/core/rake_task"
+require "bundler/gem_tasks"
 
-$:.unshift 'lib'
-require 'pomo'
-require 'rubygems'
-require 'rake'
-require 'echoe'
-
-Echoe.new "pomo", Pomo::VERSION do |p|
-  p.author = "TJ Holowaychuk"
-  p.email = "tj@vision-media.ca"
-  p.summary = "Pomodoro time management for the command-line"
-  p.url = "http://github.com/visionmedia/pomo"
-  p.runtime_dependencies << 'commander >=4.0.2'
-  p.runtime_dependencies << 'growl >=1.0.3'
+desc "Run specs"
+RSpec::Core::RakeTask.new do |t|
+  t.verbose = false
+  t.rspec_opts = '--color'
 end
-
-Dir['tasks/**/*.rake'].sort.each { |f| load f }

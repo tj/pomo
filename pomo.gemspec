@@ -1,44 +1,27 @@
 # -*- encoding: utf-8 -*-
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'pomo/version'
 
-Gem::Specification.new do |s|
-  s.name = %q{pomo}
-  s.version = "1.0.1"
+Gem::Specification.new do |gem|
+  gem.name              = "pomo"
+  gem.version           = Pomo::VERSION
+  gem.authors           = ["TJ Holowaychuk"]
+  gem.email             = ["tj@vision-media.ca"]
+  gem.summary           = "pomo-#{Pomo::VERSION}"
+  gem.description       = "Pomodoro time management for the command-line"
+  gem.homepage          = "http://github.com/visionmedia/pomo"
 
-  s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
-  s.authors = ["TJ Holowaychuk"]
-  s.date = %q{2010-03-10}
-  s.default_executable = %q{pomo}
-  s.description = %q{Pomodoro time management for the command-line}
-  s.email = %q{tj@vision-media.ca}
-  s.executables = ["pomo"]
-  s.extra_rdoc_files = ["bin/pomo", "lib/pomo.rb", "lib/pomo/github_task.rb", "lib/pomo/list.rb", "lib/pomo/notifier.rb", "lib/pomo/task.rb", "lib/pomo/version.rb", "tasks/docs.rake", "tasks/gemspec.rake", "tasks/spec.rake"]
-  s.files = ["History.md", "Manifest", "Rakefile", "Readme.md", "bin/pomo", "lib/pomo.rb", "lib/pomo/github_task.rb", "lib/pomo/list.rb", "lib/pomo/notifier.rb", "lib/pomo/task.rb", "lib/pomo/version.rb", "pomo.gemspec", "spec/pomo_spec.rb", "spec/spec.opts", "spec/spec_helper.rb", "tasks/docs.rake", "tasks/gemspec.rake", "tasks/spec.rake"]
-  s.homepage = %q{http://github.com/visionmedia/pomo}
-  s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "Pomo", "--main", "Readme.md"]
-  s.require_paths = ["lib"]
-  s.rubyforge_project = %q{pomo}
-  s.rubygems_version = %q{1.3.6}
-  s.summary = %q{Pomodoro time management for the command-line}
+  gem.rubyforge_project = "pomo"
 
-  if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
-    s.specification_version = 3
+  gem.files             = `git ls-files`.split($/)
+  gem.executables       = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
+  gem.test_files        = gem.files.grep(%r{^(test|spec|features)/})
+  gem.require_paths     = ["lib"]
+  gem.rdoc_options      = ["--line-numbers", "--inline-source", "--title", "Pomo", "--main", "Readme.md"]
 
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<commander>, [">= 4.1.2"])
-      s.add_runtime_dependency(%q<growl>, [">= 1.0.3"])             if /darwin/ =~ RUBY_PLATFORM
-      s.add_runtime_dependency(%q<terminal-notifier>, [">= 1.4.2"]) if /darwin/ =~ RUBY_PLATFORM
-      s.add_runtime_dependency(%q<libnotify>, [">= 0.8.0"])         if /linux/ =~ RUBY_PLATFORM
-    else
-      s.add_dependency(%q<commander>, [">= 4.1.2"])
-      s.add_dependency(%q<growl>, [">= 1.0.3"])             if /darwin/ =~ RUBY_PLATFORM
-      s.add_dependency(%q<terminal-notifier>, [">= 1.4.2"]) if /darwin/ =~ RUBY_PLATFORM
-      s.add_dependency(%q<libnotify>, [">= 0.8.0"])         if /linux/ =~ RUBY_PLATFORM
-    end
-  else
-    s.add_dependency(%q<commander>, [">= 4.1.2"])
-    s.add_dependency(%q<growl>, [">= 1.0.3"])             if /darwin/ =~ RUBY_PLATFORM
-    s.add_dependency(%q<terminal-notifier>, [">= 1.4.2"]) if /darwin/ =~ RUBY_PLATFORM
-    s.add_dependency(%q<libnotify>, [">= 0.8.0"])         if /linux/ =~ RUBY_PLATFORM
-  end
+  gem.add_dependency("commander", [">= 4.1.2"])
+  gem.add_dependency("terminal-notifier", [">= 1.4.2"]) if /darwin/ =~ RUBY_PLATFORM
+  gem.add_dependency("growl", [">= 1.0.3"])             if /darwin/ =~ RUBY_PLATFORM
+  gem.add_dependency("libnotify", [">= 0.8.0"])         if /linux/ =~ RUBY_PLATFORM
 end
