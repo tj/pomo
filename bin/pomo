@@ -51,12 +51,14 @@ command :start do |c|
   c.example 'Start the first task', 'pomo start 0'
   c.example 'Start the first task', 'pomo start first'
   c.example 'Start the fifth task', 'pomo start 5'
+  c.option '-p', '--progress', 'Run with progress bar in foreground'
   c.action do |args, options|
+    options.default :progress => false
     args = ['incomplete'] if args.empty?
     list.find(*args) do |task, i|
       abort 'task already completed' if task.complete?
       say "Started #{task}, you have #{task.length} minutes :)"
-      task.start
+      task.start(options.progress)
       list.save
       break
     end
@@ -134,10 +136,12 @@ command :break do |c|
   c.example 'Take a 30 minute break', 'pomo break 30'
   c.example 'Take a 30 minute break', 'pomo break --length 30'
   c.option '-l', '--length minutes', Integer, 'Change the default length in minutes'
+  c.option '-p', '--progress', 'Run with progress bar in foreground'
   c.action do |args, options|
+    options.default :progress => false
     options.default :length => args.first ? args.first.to_i : 5
     task = Pomo::Task.new('Break time', options.__hash__)
-    task.start
+    task.start(options.progress)
   end
 end
 

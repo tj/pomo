@@ -30,6 +30,7 @@ module Pomo
       @description = options.delete :description
       @length = options.fetch :length, 25
       @complete = false
+      @notifier = Pomo::Notifier.new
     end
 
     ##
@@ -48,9 +49,17 @@ module Pomo
 
     ##
     # Start timing the task.
+    def start(progress = false)
+      if progress
+        foreground_progress
+      else
+        background_progress
+      end
+    end
 
-    def start
-      notifier = Pomo::Notifier.new
+    private
+
+    def foreground_progress
       complete_message = "Time is up! Hope you are finished #{self}"
       format_message = "(:progress_bar) :remaining minutes remaining"
       progress(
@@ -60,15 +69,33 @@ module Pomo
         :complete_message => complete_message
       ) do |remaining|
         if remaining == length / 2
-          notifier.notify "Half way there!", :header => "#{remaining} minutes remaining"
+          @notifier.notify "Half way there!", :header => "#{remaining} minutes remaining"
         elsif remaining == 5
-          notifier.notify "Almost there!", :header => "5 minutes remaining"
+          @notifier.notify "Almost there!", :header => "5 minutes remaining"
         end
         sleep 60
         { :remaining => remaining }
       end
+
       @complete = true
-      notifier.notify "Hope you are finished #{self}", :header => "Time is up!", :type => :warning
+      @notifier.notify "Hope you are finished #{self}", :header => "Time is up!", :type => :warning
+    end
+
+    def background_progress
+      pid = Process.fork do
+        length.downto(1) do |remaining|
+          if remaining == length / 2
+            @notifier.notify "Half way there!", :header => "#{remaining} minutes remaining"
+          elsif remaining == 5
+            @notifier.notify "Almost there!", :header => "5 minutes remaining"
+          end
+          sleep 60
+        end
+        @complete = true
+        @notifier.notify "Hope you are finished #{self}", :header => "Time is up!", :type => :warning
+      end
+
+      Process.detach(pid)
     end
 
   end
