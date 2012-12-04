@@ -49,17 +49,17 @@ module Pomo
 
     ##
     # Start timing the task.
-    def start(progress = false)
+    def start(progress = false, list = nil)
       if progress
-        foreground_progress
+        foreground_progress(list)
       else
-        background_progress
+        background_progress(list)
       end
     end
 
     private
 
-    def foreground_progress
+    def foreground_progress(list)
       complete_message = "Time is up! Hope you are finished #{self}"
       format_message = "(:progress_bar) :remaining minutes remaining"
       progress(
@@ -79,9 +79,11 @@ module Pomo
 
       @complete = true
       @notifier.notify "Hope you are finished #{self}", :header => "Time is up!", :type => :warning
+
+      list.save unless list.nil?
     end
 
-    def background_progress
+    def background_progress(list)
       pid = Process.fork do
         length.downto(1) do |remaining|
           if remaining == length / 2
@@ -93,6 +95,8 @@ module Pomo
         end
         @complete = true
         @notifier.notify "Hope you are finished #{self}", :header => "Time is up!", :type => :warning
+
+        list.save unless list.nil?
       end
 
       Process.detach(pid)

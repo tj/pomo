@@ -58,8 +58,7 @@ command :start do |c|
     list.find(*args) do |task, i|
       abort 'task already completed' if task.complete?
       say "Started #{task}, you have #{task.length} minutes :)"
-      task.start(options.progress)
-      list.save
+      task.start(options.progress, list)
       break
     end
   end
