@@ -84,15 +84,21 @@ module Pomo
     end
 
     def background_progress(list)
+      path = File.expand_path('~/.pomo_stat')
       pid = Process.fork do
         length.downto(1) do |remaining|
-          if remaining == length / 2
-            @notifier.notify "Half way there!", :header => "#{remaining} minutes remaining"
-          elsif remaining == 5
-            @notifier.notify "Almost there!", :header => "5 minutes remaining"
+          File.open(path, 'w') do |file|
+            file.write "#{remaining}:00"
+            if remaining == length / 2
+              @notifier.notify "Half way there!", :header => "#{remaining} minutes remaining"
+            elsif remaining == 5
+              @notifier.notify "Almost there!", :header => "5 minutes remaining"
+            end
           end
           sleep 60
         end
+
+        File.open(path, 'w') {|file| file.write "0:00" }
         @complete = true
         @notifier.notify "Hope you are finished #{self}", :header => "Time is up!", :type => :warning
 
