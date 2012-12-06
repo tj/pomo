@@ -7,6 +7,7 @@ require 'commander/import'
 require 'pomo'
 
 program :version, Pomo::VERSION
+
 program :description, "Pomodoro time management.
     Most of the subcommands work directly with tasks, and
     because of this pomo provides a unified task selection api
@@ -28,7 +29,7 @@ program :int_message, "\nTerminated pomo" \
                       "\n  * previously running tasks not marked as complete" \
                       "\n  * manually complete a task with `$ pomo complete <task>`"
 
-list = Pomo::List.new File.exists?('.pomo') ? '.pomo' : '~/.pomo'
+list = Pomo::List.new
 
 default_command :list
 
@@ -36,7 +37,7 @@ command :init do |c|
   c.syntax = 'pomo init [options]'
   c.description = 'Initialize pomo in the current directory'
   c.action do |args, options|
-    Pomo::List.new '.pomo'
+    Pomo::List.new :init => true
     say "Initialized at `./.pomo`"
     say "  - Any commands run while in this directory will reference this file for tasks"
     say "  - To remove simply execute `rm .pomo`"
