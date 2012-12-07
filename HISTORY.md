@@ -1,3 +1,12 @@
+2.0.0 / 2012-12-06
+==================
+  * Added detach mode, on by default. To get the 1.x progress bar run `pomo start -p`. Closes #1
+  * Added notification support for Mac OS X User Notifications on OS X 10.8+,
+    and libnotify for Linux. Growl continues to be supported on OS X 10.7 or earlier. Closes #23
+  * Added output of pomo timer to `~/.pomo_stat`. 
+    This enables Tmux status lines, etc. to read this file and display the current time
+    left in a Pomodoro.
+  * Added `pomo ls` as an alias to `pomo list`
 
 1.0.1 / 2010-03-10
 ==================
