@@ -104,7 +104,7 @@ module Pomo
     end
 
     def background_progress
-      path = File.expand_path('~/.pomo_stat')
+      path = File.join(ENV['HOME'],'.pomo_stat')
       pid = Process.fork do
         length.downto(1) do |remaining|
           File.open(path, 'w') do |file|
