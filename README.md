@@ -58,6 +58,11 @@ Taken from `pomo help`:
 
         $ pomo start
         Started Fix IE stying issues, you have 25 minutes :)
+
+  * Alternatively, you can start the first incomplete task with a progress bar:
+
+        $ pomo start -p
+        Started Fix IE stying issues, you have 25 minutes :)
         (=........................) 24 minutes remaining
     
   * Once you have completed the task, list again (alternatively `pomo ls`):
@@ -74,7 +79,7 @@ Taken from `pomo help`:
         
   * List only remaining tasks:
 
-        $ pomo ls--incomplete
+        $ pomo ls --incomplete
             1. Destroy IE                          : 25 minutes
         
   * List only completed tasks:
