@@ -18,6 +18,11 @@ module Pomo
     attr_accessor :description
 
     ##
+    # Task currently running bool.
+
+    attr_accessor :running
+
+    ##
     # Task completion bool.
 
     attr_accessor :complete
@@ -29,6 +34,7 @@ module Pomo
       @name = name or raise '<task> required'
       @description = options.delete :description
       @length = options.fetch :length, 25
+      @running = false
       @complete = false
       @notifier = Pomo::Notifier.new
     end
@@ -41,6 +47,13 @@ module Pomo
     end
 
     ##
+    # Check if the task currently running.
+
+    def running?
+      running
+    end
+
+    ##
     # Check if the task has been completed.
 
     def complete?
@@ -50,16 +63,19 @@ module Pomo
     ##
     # Start timing the task.
     def start(progress = false, list = nil)
+      @running = true
+      list.save unless list.nil?
+
       if progress
-        foreground_progress(list)
+        foreground_progress
       else
-        background_progress(list)
+        background_progress
       end
     end
 
     private
 
-    def foreground_progress(list)
+    def foreground_progress
       complete_message = "Time is up! Hope you are finished #{self}"
       format_message = "(:progress_bar) :remaining minutes remaining"
       progress(
@@ -77,13 +93,17 @@ module Pomo
         { :remaining => remaining }
       end
 
-      @complete = true
       @notifier.notify "Hope you are finished #{self}", :header => "Time is up!", :type => :warning
 
-      list.save unless list.nil?
+      list = Pomo::List.new
+      if task = list.running
+        task.running = false
+        task.complete = true
+        list.save
+      end
     end
 
-    def background_progress(list)
+    def background_progress
       path = File.expand_path('~/.pomo_stat')
       pid = Process.fork do
         length.downto(1) do |remaining|
@@ -99,10 +119,14 @@ module Pomo
         end
 
         File.open(path, 'w') {|file| file.write "0:00" }
-        @complete = true
         @notifier.notify "Hope you are finished #{self}", :header => "Time is up!", :type => :warning
 
-        list.save unless list.nil?
+        list = Pomo::List.new
+        if task = list.running
+          task.running = false
+          task.complete = true
+          list.save
+        end
       end
 
       Process.detach(pid)

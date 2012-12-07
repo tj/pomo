@@ -68,6 +68,13 @@ module Pomo
     end
 
     ##
+    # Find currently running _task_ or nil.
+
+    def running
+      tasks.detect {|task| task.running? }
+    end
+
+    ##
     # Add _task_ to the list in memory (requires saving).
 
     def add task

@@ -54,6 +54,8 @@ command :start do |c|
   c.example 'Start the fifth task', 'pomo start 5'
   c.option '-p', '--progress', 'Run with progress bar in foreground'
   c.action do |args, options|
+    abort 'a task is already running' if list.running
+
     options.default :progress => false
     args = ['incomplete'] if args.empty?
     list.find(*args) do |task, i|
