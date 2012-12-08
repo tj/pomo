@@ -11,6 +11,8 @@ module Pomo
         @notifier = Pomo::Notifier::Growl.new
       elsif config.notifier == 'growl'
         @notifier = Pomo::Notifier::Libnotify.new
+      elsif config.notifier == 'quicksilver'
+        @notifier = Pomo::Notifier::Quicksilver.new
       end
     end
 

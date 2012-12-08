@@ -14,7 +14,7 @@ module Pomo
     ##
     # Notification library.
     #
-    # values: terminal_notifier | libnotify | growl
+    # values: notification_center | libnotify | growl | quicksilver
 
     attr_reader :notifier
 
