@@ -6,8 +6,9 @@
 
 With Pomo you can add, remove, list, view, and start timing tasks all via the 
 command-line with a simple, slick interface. You are reminded of the remaining 
-time on a task via Growl. These notifications appear half-way, at the 5 minute point, 
-and when the task duration has expired. 
+time on a task via Notification Center, Growl, libnotify, or Quicksilver.
+These notifications appear half-way, at the 5 minute point, and when the task
+duration has expired. 
 
 ## Installation
 
@@ -136,6 +137,41 @@ Taken from `pomo help`:
 
         $ pomo init
     
+## Configuration
+
+Pomo uses `~/.pomorc` for configuration options.
+
+Configuration options:
+
+* `:notifier`: Notification library
+    * Default: depends on OS. String.
+    * Valid values: `notification_center`, `libnotify`, `growl`, `quicksilver`
+* `:pomo_stat`: Write pomo timer to `~/.pomo_stat`
+    * Default: `false`. Boolean.
+    * Valid values: `true`, `false`
+* `:tmux`: Refresh tmux status bar
+    * Default: `false`. Boolean.
+    * Valid values: `true`, `false`
+
+For example on Mac OS X Mountain Lion, `~/.pomorc` defaults to:
+
+    ---
+    :notifier: notification_center
+    :pomo_stat: false
+    :tmux: false
+
+## Tmux Status Bar Integration
+
+The pomo timer can be displayed in tmux's status bar with the following
+configurations set:
+
+    :pomo_stat: true
+    :tmux: true
+
+Then add the below to your `~/.tmux.conf`:
+
+    set-option -g status-right '#(echo $\(cat ~/.pomo_stat\))'
+
 ## Contributing
 
 1. Fork it
