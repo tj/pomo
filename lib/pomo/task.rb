@@ -36,7 +36,6 @@ module Pomo
       @length = options.fetch :length, 25
       @running = false
       @complete = false
-      @notifier = Pomo::Notifier.new
     end
 
     ##
@@ -62,20 +61,25 @@ module Pomo
 
     ##
     # Start timing the task.
-    def start(progress = false, list = nil)
+    def start(config, options = {})
+      list = options[:list]
+      progress = options[:progress]
+
       @running = true
       list.save unless list.nil?
 
       if progress
-        foreground_progress
+        foreground_progress(config)
       else
-        background_progress
+        background_progress(config)
       end
     end
 
     private
 
-    def foreground_progress
+    def foreground_progress(config)
+      notifier = Pomo::Notifier.new(config)
+
       complete_message = "Time is up! Hope you are finished #{self}"
       format_message = "(:progress_bar) :remaining minutes remaining"
       progress(
@@ -85,15 +89,15 @@ module Pomo
         :complete_message => complete_message
       ) do |remaining|
         if remaining == length / 2
-          @notifier.notify "Half way there!", :header => "#{remaining} minutes remaining"
+          notifier.notify "Half way there!", :header => "#{remaining} minutes remaining"
         elsif remaining == 5
-          @notifier.notify "Almost there!", :header => "5 minutes remaining"
+          notifier.notify "Almost there!", :header => "5 minutes remaining"
         end
         sleep 60
         { :remaining => remaining }
       end
 
-      @notifier.notify "Hope you are finished #{self}", :header => "Time is up!", :type => :warning
+      notifier.notify "Hope you are finished #{self}", :header => "Time is up!", :type => :warning
 
       list = Pomo::List.new
       if task = list.running
@@ -103,23 +107,24 @@ module Pomo
       end
     end
 
-    def background_progress
-      path = File.join(ENV['HOME'],'.pomo_stat')
+    def background_progress(config)
+      notifier = Pomo::Notifier.new(config)
+
       pid = Process.fork do
         length.downto(1) do |remaining|
-          File.open(path, 'w') do |file|
-            file.write "#{remaining}:00"
-            if remaining == length / 2
-              @notifier.notify "Half way there!", :header => "#{remaining} minutes remaining"
-            elsif remaining == 5
-              @notifier.notify "Almost there!", :header => "5 minutes remaining"
-            end
+          write_pomo_stat(remaining) if config.pomo_stat
+          refresh_tmux_status_bar if config.tmux
+          if remaining == length / 2
+            notifier.notify "Half way there!", :header => "#{remaining} minutes remaining"
+          elsif remaining == 5
+            notifier.notify "Almost there!", :header => "5 minutes remaining"
           end
           sleep 60
         end
 
-        File.open(path, 'w') {|file| file.write "0:00" }
-        @notifier.notify "Hope you are finished #{self}", :header => "Time is up!", :type => :warning
+        write_pomo_stat(0) if config.pomo_stat
+        refresh_tmux_status_bar if config.tmux
+        notifier.notify "Hope you are finished #{self}", :header => "Time is up!", :type => :warning
 
         list = Pomo::List.new
         if task = list.running
@@ -129,6 +134,18 @@ module Pomo
         end
       end
 
+      Process.detach(pid)
+    end
+
+    def write_pomo_stat(time)
+      path = File.join(ENV['HOME'],'.pomo_stat')
+      File.open(path, 'w') {|file| file.write "#{time}:00" }
+    end
+
+    def refresh_tmux_status_bar
+      pid = Process.fork do
+        exec "tmux refresh-client -S -t $(tmux list-clients -F '\#{client_tty}')"
+      end
       Process.detach(pid)
     end
 

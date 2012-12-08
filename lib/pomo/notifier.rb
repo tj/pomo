@@ -1,26 +1,15 @@
-if RUBY_PLATFORM =~ /darwin/
-  MACOS_FULL_VERSION = `/usr/bin/sw_vers -productVersion`.chomp
-  MACOS_VERSION = /(10\.\d+)(\.\d+)?/.match(MACOS_FULL_VERSION).captures.first.to_f
-  OS_VERSION = "Mac OS X #{MACOS_FULL_VERSION}"
-  MACOS = true
-else
-  MACOS_FULL_VERSION = MACOS_VERSION = 0
-  OS_VERSION = RUBY_PLATFORM
-  MACOS = false
-end
-
 
 module Pomo
   class Notifier
 
-    def initialize
-      if MACOS
-        if (10.8 <= MACOS_VERSION)
-          @notifier = Pomo::Notifier::NotificationCenter.new
-        else
-          @notifier = Pomo::Notifier::Growl.new
-        end
-      else
+    ##
+    # Initialize notifier library from configuration.
+    def initialize(config)
+      if config.notifier == 'notification_center'
+        @notifier = Pomo::Notifier::NotificationCenter.new
+      elsif config.notifier == 'libnotify'
+        @notifier = Pomo::Notifier::Growl.new
+      elsif config.notifier == 'growl'
         @notifier = Pomo::Notifier::Libnotify.new
       end
     end
