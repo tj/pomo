@@ -6,8 +6,8 @@ require 'pomo/version'
 Gem::Specification.new do |gem|
   gem.name              = "pomo"
   gem.version           = Pomo::VERSION
-  gem.authors           = ["TJ Holowaychuk"]
-  gem.email             = ["tj@vision-media.ca"]
+  gem.authors           = ["TJ Holowaychuk", "Steve McKinney"]
+  gem.email             = ["tj@vision-media.ca", "stevemckinney@gmail.com"]
   gem.summary           = "pomo-#{Pomo::VERSION}"
   gem.description       = "Pomodoro time management for the command-line"
   gem.homepage          = "http://github.com/visionmedia/pomo"
