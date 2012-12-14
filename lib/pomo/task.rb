@@ -80,6 +80,8 @@ module Pomo
     def foreground_progress(config)
       notifier = Pomo::Notifier.new(config)
 
+      say "Started #{self}, you have #{length} minutes :)"
+
       complete_message = "Time is up! Hope you are finished #{self}"
       format_message = '(:progress_bar) :remaining minutes remaining'
       progress(
@@ -109,6 +111,8 @@ module Pomo
 
     def background_progress(config)
       notifier = Pomo::Notifier.new(config)
+
+      notifier.notify "Started #{self}", :header => "You have #{length} minutes"
 
       pid = Process.fork do
         length.downto(1) do |remaining|

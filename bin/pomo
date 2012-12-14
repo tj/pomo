@@ -61,7 +61,6 @@ command :start do |c|
     args = ['incomplete'] if args.empty?
     list.find(*args) do |task, i|
       abort 'task already completed' if task.complete?
-      say "Started #{task}, you have #{task.length} minutes :)"
       task.start(config, :progress => options.progress, :list => list)
       break
     end
