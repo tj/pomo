@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Display timer as red if less than 5 mins and
+# green for greater that 5 mins and
+# blue for break.
+# 0 is default color.
+echo $(cat ~/.pomo_stat) | \
+sed \
+-e 's/^\([1-5]\):00/#[default]#[fg=red]\1:00#[default]#[bold]/' \
+-e 's/^\([1-9][0-9]\{0,1\}\):00/#[default]#[fg=green]\1:00#[default]#[bold]/' \
+-e 's/^\*\([0-9]\{1,2\}\):00/#[default]#[fg=blue]\1:00#[default]#[bold]/'

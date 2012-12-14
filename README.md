@@ -160,7 +160,7 @@ For example on Mac OS X Mountain Lion, `~/.pomorc` defaults to:
     :pomo_stat: false
     :tmux: false
 
-## Tmux Status Bar Integration
+## tmux Status Bar Integration
 
 The pomo timer can be displayed in tmux's status bar with the following
 configurations set:
@@ -170,7 +170,7 @@ configurations set:
 
 Then add the below to your `~/.tmux.conf`:
 
-    set-option -g status-right '#(echo $\(cat ~/.pomo_stat\))'
+    set-option -g status-right '#($GEM_HOME/bin/_pomo_status)'
 
 ## Contributing
 
