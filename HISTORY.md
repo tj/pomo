@@ -5,9 +5,9 @@
   * Added notification support for Mac OS X User Notifications, Quicksilver and libnotify.
     Growl continues to be supported. Closes #23
   * Added optional output of pomo timer to `~/.pomo_stat`.
-    This enables Tmux status lines, etc. to read this file and display the current time
+    This enables tmux status bar, etc. to read this file and display the current time
     left in a Pomodoro.
-  * Added optional refresh of Tmux status line when timer changes.
+  * Added optional refresh of tmux status bar when timer changes.
   * Added `pomo ls` as an alias to `pomo list`
 
 1.0.1 / 2010-03-10

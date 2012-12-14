@@ -144,13 +144,16 @@ Pomo uses `~/.pomorc` for configuration options.
 Configuration options:
 
 * `:notifier`: Notification library
-    * Default: depends on OS. String.
+    * Format: String
+    * Default: depends on OS
     * Valid values: `notification_center`, `libnotify`, `growl`, `quicksilver`
 * `:pomo_stat`: Write pomo timer to `~/.pomo_stat`
-    * Default: `false`. Boolean.
+    * Format: Boolean
+    * Default: `false`
     * Valid values: `true`, `false`
-* `:tmux`: Refresh tmux status bar
-    * Default: `false`. Boolean.
+* `:tmux`: Refresh tmux status bar on timer change
+    * Format: Boolean
+    * Default: `false`
     * Valid values: `true`, `false`
 
 For example on Mac OS X Mountain Lion, `~/.pomorc` defaults to:
