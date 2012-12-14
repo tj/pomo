@@ -39,9 +39,9 @@ command :init do |c|
   c.description = 'Initialize pomo in the current directory'
   c.action do |args, options|
     Pomo::List.new :init => true
-    say "Initialized at `./.pomo`"
-    say "  - Any commands run while in this directory will reference this file for tasks"
-    say "  - To remove simply execute `rm .pomo`"
+    say 'Initialized at `./.pomo`'
+    say '  - Any commands run while in this directory will reference this file for tasks'
+    say '  - To remove simply execute `rm .pomo`'
   end
 end
 

@@ -81,7 +81,7 @@ module Pomo
       notifier = Pomo::Notifier.new(config)
 
       complete_message = "Time is up! Hope you are finished #{self}"
-      format_message = "(:progress_bar) :remaining minutes remaining"
+      format_message = '(:progress_bar) :remaining minutes remaining'
       progress(
         (0..length).to_a.reverse,
         :format => format_message,
@@ -89,15 +89,15 @@ module Pomo
         :complete_message => complete_message
       ) do |remaining|
         if remaining == length / 2
-          notifier.notify "Half way there!", :header => "#{remaining} minutes remaining"
+          notifier.notify 'Half way there!', :header => "#{remaining} minutes remaining"
         elsif remaining == 5
-          notifier.notify "Almost there!", :header => "5 minutes remaining"
+          notifier.notify 'Almost there!', :header => '5 minutes remaining'
         end
         sleep 60
         { :remaining => remaining }
       end
 
-      notifier.notify "Hope you are finished #{self}", :header => "Time is up!", :type => :warning
+      notifier.notify "Hope you are finished #{self}", :header => 'Time is up!', :type => :warning
 
       list = Pomo::List.new
       if task = list.running
@@ -115,16 +115,16 @@ module Pomo
           write_pomo_stat(remaining) if config.pomo_stat
           refresh_tmux_status_bar if config.tmux
           if remaining == length / 2
-            notifier.notify "Half way there!", :header => "#{remaining} minutes remaining"
+            notifier.notify 'Half way there!', :header => "#{remaining} minutes remaining"
           elsif remaining == 5
-            notifier.notify "Almost there!", :header => "5 minutes remaining"
+            notifier.notify 'Almost there!', :header => '5 minutes remaining'
           end
           sleep 60
         end
 
         write_pomo_stat(0) if config.pomo_stat
         refresh_tmux_status_bar if config.tmux
-        notifier.notify "Hope you are finished #{self}", :header => "Time is up!", :type => :warning
+        notifier.notify "Hope you are finished #{self}", :header => 'Time is up!', :type => :warning
 
         list = Pomo::List.new
         if task = list.running
