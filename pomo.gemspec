@@ -21,6 +21,7 @@ Gem::Specification.new do |gem|
   gem.rdoc_options      = ["--line-numbers", "--inline-source", "--title", "Pomo", "--main", "Readme.md"]
 
   gem.add_dependency("commander", [">= 4.1.2"])
+  gem.add_dependency("octokit", "~> 1.19")
   gem.add_dependency("terminal-notifier", [">= 1.4.2"]) if /darwin/ =~ RUBY_PLATFORM
   gem.add_dependency("growl", [">= 1.0.3"])             if /darwin/ =~ RUBY_PLATFORM
   gem.add_dependency("libnotify", [">= 0.8.0"])         if /linux/ =~ RUBY_PLATFORM

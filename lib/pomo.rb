@@ -1,4 +1,5 @@
 require 'yaml'
+require 'octokit'
 require 'terminal-notifier' if /darwin/ =~ RUBY_PLATFORM
 require 'growl'             if /darwin/ =~ RUBY_PLATFORM
 require 'libnotify'         if /linux/ =~ RUBY_PLATFORM
