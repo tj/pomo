@@ -2,8 +2,15 @@
 module Pomo
   class Break < Task
 
-    def write_pomo_stat(time)
-      time > 0 ? super("*#{time}") : super(time)
+    private
+
+    def tmux_time(time)
+      case time
+      when 0
+        "#{time}:00"
+      else
+        "#[default]#[fg=blue]#{time}:00#[default]"
+      end
     end
 
   end

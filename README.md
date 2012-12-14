@@ -1,14 +1,16 @@
-# Pomo  
+# Pomo
 
-  Command-line application for the [Pomodoro](http://www.pomodorotechnique.com/) time management technique.
-  
+Command-line application for the [Pomodoro](http://www.pomodorotechnique.com/)
+time management technique, with notification and tmux status bar support.
+
 ## Description
 
 With Pomo you can add, remove, list, view, and start timing tasks all via the 
 command-line with a simple, slick interface. You are reminded of the remaining 
 time on a task via Notification Center, Growl, libnotify, or Quicksilver.
 These notifications appear half-way, at the 5 minute point, and when the task
-duration has expired. 
+duration has expired. Also, the Pomo timer can be displayed in your tmux
+status bar.
 
 ## Installation
 
@@ -147,10 +149,6 @@ Configuration options:
     * Format: String
     * Default: depends on OS
     * Valid values: `notification_center`, `libnotify`, `growl`, `quicksilver`
-* `:pomo_stat`: Write pomo timer to `~/.pomo_stat`
-    * Format: Boolean
-    * Default: `false`
-    * Valid values: `true`, `false`
 * `:tmux`: Refresh tmux status bar on timer change
     * Format: Boolean
     * Default: `false`
@@ -160,20 +158,24 @@ For example on Mac OS X Mountain Lion, `~/.pomorc` defaults to:
 
     ---
     :notifier: notification_center
-    :pomo_stat: false
     :tmux: false
 
 ## tmux Status Bar Integration
 
-The pomo timer can be displayed in tmux's status bar with the following
+The Pomo timer can be displayed in tmux's status bar with the following
 configurations set:
 
-    :pomo_stat: true
     :tmux: true
 
 Then add the below to your `~/.tmux.conf`:
 
-    set-option -g status-right '#($GEM_HOME/bin/_pomo_status)'
+    set-option -g status-right '#(cat ~/.pomo_stat)'
+
+The timer will display with the default color when not active,
+green during a Pomodoro, red during the last 5 minutes of a Pomodoro,
+and blue during a break e.g.
+
+![tmux status bar](http://i.imgur.com/uIzM3.png)
 
 ## Contributing
 

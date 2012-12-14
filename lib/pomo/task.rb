@@ -112,8 +112,8 @@ module Pomo
 
       pid = Process.fork do
         length.downto(1) do |remaining|
-          write_pomo_stat(remaining) if config.pomo_stat
-          refresh_tmux_status_bar if config.tmux
+          write_tmux_time(remaining) if config.tmux
+          refresh_tmux_status_bar    if config.tmux
           if remaining == length / 2
             notifier.notify 'Half way there!', :header => "#{remaining} minutes remaining"
           elsif remaining == 5
@@ -122,7 +122,7 @@ module Pomo
           sleep 60
         end
 
-        write_pomo_stat(0) if config.pomo_stat
+        write_tmux_time(0) if config.tmux
         refresh_tmux_status_bar if config.tmux
         notifier.notify "Hope you are finished #{self}", :header => 'Time is up!', :type => :warning
 
@@ -137,9 +137,22 @@ module Pomo
       Process.detach(pid)
     end
 
-    def write_pomo_stat(time)
+    def tmux_time(time)
+      case time
+      when 0
+        "#{time}:00"
+      when 1..5
+        "#[default]#[fg=red]#{time}:00#[default]"
+      when 6..00
+        "#[default]#[fg=green]#{time}:00#[default]"
+      end
+    end
+
+    def write_tmux_time(time)
       path = File.join(ENV['HOME'],'.pomo_stat')
-      File.open(path, 'w') {|file| file.write "#{time}:00" }
+      File.open(path, 'w') do |file|
+        file.write tmux_time(time)
+      end
     end
 
     def refresh_tmux_status_bar
