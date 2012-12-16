@@ -68,21 +68,30 @@ command :start do |c|
 end
 
 command :import do |c|
-  c.syntax = 'pomo import <user> <project> [options]'
+  c.syntax = 'pomo import <user> <project> [issue_number]'
   c.summary = 'Import Github project issues'
   c.description = 'Import Github project issues which have not yet been closed'
+  c.example 'Import all open Github issues from "visionmedia/pomo"', 'pomo import visionmedia pomo'
+  c.example 'Import Github issue #3 from "visionmedia/pomo"', 'pomo import visionmedia pomo 3'
   c.action do |args, options|
     user = args.shift or raise('Github <user> is required')
     project = args.shift or raise('Github <project> is required')
+    number = args.shift
     begin
-      Octokit.list_issues({:username => user, :repo => project}, :state => 'open', :sort => 'created').each_with_index do |issue, index|
+      if number
+        issues = [Octokit.issue({:username => user, :repo => project}, number)]
+      else
+        issues = Octokit.list_issues({:username => user, :repo => project}, :state => 'open', :sort => 'created')
+      end
+      issues.each_with_index do |issue, index|
         say "Importing issues from https://github.com/#{user}/#{project}" if index == 0
-        task = Pomo::GithubTask.new issue.title,
+        task = Pomo::GithubTask.new(issue.title,
           :username => user,
           :project => project,
           :description => issue.body,
-          :labels => issue.labels,
+          :labels => issue.labels.map(&:name),
           :number => issue.number
+        )
         list << task
         say "  - Added #{task}"
       end
