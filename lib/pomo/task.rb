@@ -147,7 +147,7 @@ module Pomo
         "#{time}:00"
       when 1..5
         "#[default]#[fg=red]#{time}:00#[default]"
-      when 6..00
+      when 6..100
         "#[default]#[fg=green]#{time}:00#[default]"
       end
     end
