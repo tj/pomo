@@ -1,3 +1,13 @@
+2.0.0 / 2012-12-16
+==================
+
+  * Added detach mode, on by default. To get the 1.x progress bar run `pomo start -p`. Closes #1
+  * Added notification support for Mac OS X User Notifications, Quicksilver and libnotify.
+    Growl continues to be supported. Closes #23
+  * Added optional tmux status bar support to display Pomo timer.
+  * Fixed import of Github issues list. Closes #11
+  * Added support for importing a single Github issue. Closes #2
+  * Added `pomo ls` as an alias to `pomo list`
 
 1.0.1 / 2010-03-10
 ==================

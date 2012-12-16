@@ -1,13 +1,16 @@
-# Pomo  
+# Pomo
 
-  Command-line application for the [Pomodoro](http://www.pomodorotechnique.com/) time management technique.
-  
+Command-line application for the [Pomodoro](http://www.pomodorotechnique.com/)
+time management technique, with notification and tmux status bar support.
+
 ## Description
 
 With Pomo you can add, remove, list, view, and start timing tasks all via the 
 command-line with a simple, slick interface. You are reminded of the remaining 
-time on a task via Growl. These notifications appear half-way, at the 5 minute point, 
-and when the task duration has expired. 
+time on a task via Notification Center, Growl, libnotify, or Quicksilver.
+These notifications appear half-way, at the 5 minute point, and when the task
+duration has expired. Also, the Pomo timer can be displayed in your tmux
+status bar.
 
 ## Installation
 
@@ -58,11 +61,16 @@ Taken from `pomo help`:
 
         $ pomo start
         Started Fix IE stying issues, you have 25 minutes :)
+
+  * Alternatively, you can start the first incomplete task with a progress bar:
+
+        $ pomo start -p
+        Started Fix IE stying issues, you have 25 minutes :)
         (=........................) 24 minutes remaining
     
-  * Once you have completed the task, list again:
+  * Once you have completed the task, list again (alternatively `pomo ls`):
 
-        $ pomo list
+        $ pomo ls
           ✓ 0. Fix IE stying issues                : 25 minutes
             1. Destroy IE                          : 25 minutes
         
@@ -74,12 +82,12 @@ Taken from `pomo help`:
         
   * List only remaining tasks:
 
-        $ pomo list --incomplete
+        $ pomo ls --incomplete
             1. Destroy IE                          : 25 minutes
         
   * List only completed tasks:
 
-        $ pomo list --complete
+        $ pomo ls --complete
           ✓ 0. Fix IE stying issues                : 25 minutes
 
   * At any time mid-task you may terminate pomo via CTRL + C, at which
@@ -131,28 +139,48 @@ Taken from `pomo help`:
 
         $ pomo init
     
-## License
+## Configuration
 
-> (The MIT License)
->
-> Copyright (c) 2009 TJ Holowaychuk <tj@vision-media.ca>
->
-> Permission is hereby granted, free of charge, to any person
-> obtaining a copy of this software and associated documentation files
-> (the 'Software'), to deal in the Software without restriction,
-> including without limitation the rights to use, copy, modify, merge,
-> publish, distribute, sublicense, an d/or sell copies of the
-> Software, and to permit persons to whom the Software is furnished to
-> do so, subject to the following conditions:
->
-> The above copyright notice and this permission notice shall be
-> included in all copies or substantial portions of the Software.
->
-> THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-> EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-> MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-> NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-> BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-> ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-> CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-> THE SOFTWARE.
+Pomo uses `~/.pomorc` for configuration options.
+
+Configuration options:
+
+* `:notifier`: Notification library
+    * Format: String
+    * Default: depends on OS
+    * Valid values: `notification_center`, `libnotify`, `growl`, `quicksilver`
+* `:tmux`: Refresh tmux status bar on timer change
+    * Format: Boolean
+    * Default: `false`
+    * Valid values: `true`, `false`
+
+For example on Mac OS X Mountain Lion, `~/.pomorc` defaults to:
+
+    ---
+    :notifier: notification_center
+    :tmux: false
+
+## tmux Status Bar Integration
+
+The Pomo timer can be displayed in tmux's status bar with the following
+configurations set:
+
+    :tmux: true
+
+Then add the below to your `~/.tmux.conf`:
+
+    set-option -g status-right '#(cat ~/.pomo_stat)'
+
+The timer will display with the default color when not active,
+green during a Pomodoro, red during the last 5 minutes of a Pomodoro,
+and blue during a break e.g.
+
+![tmux status bar](http://i.imgur.com/uIzM3.png)
+
+## Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request

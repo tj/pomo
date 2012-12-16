@@ -1,18 +1,19 @@
 #!/usr/bin/env ruby
 # coding: utf-8
 
-$:.unshift File.dirname(__FILE__) + '/../lib' 
+$:.unshift File.dirname(__FILE__) + '/../lib'
 require 'rubygems'
 require 'commander/import'
 require 'pomo'
 
 program :version, Pomo::VERSION
+
 program :description, "Pomodoro time management.
-    Most of the subcommands work directly with tasks, and 
+    Most of the subcommands work directly with tasks, and
     because of this pomo provides a unified task selection api
-    shown below which can be used with most of the commands 
-    (those with [task ...] in their synopsis). 
-    
+    shown below which can be used with most of the commands
+    (those with [task ...] in their synopsis).
+
     n          : selects a single task by index : Ex: pomo remove 1
     [n ]+      : selects several tasks by index : Ex: pomo remove 2 8 1
     n..n       : selects a range of tasks       : Ex: pomo remove 5..9
@@ -28,7 +29,8 @@ program :int_message, "\nTerminated pomo" \
                       "\n  * previously running tasks not marked as complete" \
                       "\n  * manually complete a task with `$ pomo complete <task>`"
 
-list = Pomo::List.new File.exists?('.pomo') ? '.pomo' : '~/.pomo'
+config = Pomo::Configuration.new
+list = Pomo::List.new
 
 default_command :list
 
@@ -36,11 +38,11 @@ command :init do |c|
   c.syntax = 'pomo init [options]'
   c.description = 'Initialize pomo in the current directory'
   c.action do |args, options|
-    Pomo::List.new '.pomo'
-    say "Initialized at `./.pomo`"
-    say "  - Any commands run while in this directory will reference this file for tasks"
-    say "  - To remove simply execute `rm .pomo`"
-  end  
+    Pomo::List.new :init => true
+    say 'Initialized at `./.pomo`'
+    say '  - Any commands run while in this directory will reference this file for tasks'
+    say '  - To remove simply execute `rm .pomo`'
+  end
 end
 
 command :start do |c|
@@ -51,44 +53,56 @@ command :start do |c|
   c.example 'Start the first task', 'pomo start 0'
   c.example 'Start the first task', 'pomo start first'
   c.example 'Start the fifth task', 'pomo start 5'
+  c.option '-p', '--progress', 'Run with progress bar in foreground'
   c.action do |args, options|
+    abort 'a task is already running' if list.running
+
+    options.default :progress => false
     args = ['incomplete'] if args.empty?
     list.find(*args) do |task, i|
       abort 'task already completed' if task.complete?
-      say "Started #{task}, you have #{task.length} minutes :)"
-      task.start
-      list.save
+      task.start(config, :progress => options.progress, :list => list)
       break
     end
   end
 end
 
 command :import do |c|
-  c.syntax = 'pomo import <user> <project> [options]'
+  c.syntax = 'pomo import <user> <project> [issue_number]'
   c.summary = 'Import Github project issues'
   c.description = 'Import Github project issues which have not yet been closed'
+  c.example 'Import all open Github issues from "visionmedia/pomo"', 'pomo import visionmedia pomo'
+  c.example 'Import Github issue #3 from "visionmedia/pomo"', 'pomo import visionmedia pomo 3'
   c.action do |args, options|
-    gem 'octopi', '>=0.2.1'
-    require 'octopi'
     user = args.shift or raise('Github <user> is required')
     project = args.shift or raise('Github <project> is required')
-    if repo = Octopi::Repository.find(:user => user, :name => project)
-      say "Importing items from http://github.com/#{user}/#{project}"
-      repo.issues.select { |i| not i.closed_at }.each do |issue|
-        task = Pomo::GithubTask.new issue.title, 
+    number = args.shift
+    begin
+      if number
+        issues = [Octokit.issue({:username => user, :repo => project}, number)]
+      else
+        issues = Octokit.list_issues({:username => user, :repo => project}, :state => 'open', :sort => 'created')
+      end
+      issues.each_with_index do |issue, index|
+        say "Importing issues from https://github.com/#{user}/#{project}" if index == 0
+        task = Pomo::GithubTask.new(issue.title,
           :username => user,
           :project => project,
           :description => issue.body,
-          :labels => issue.labels,
+          :labels => issue.labels.map(&:name),
           :number => issue.number
+        )
         list << task
         say "  - Added #{task}"
       end
       list.save
+    rescue Octokit::NotFound => e
+      say '404: This is not the repo you are looking for.'
+      say e.message
     end
   end
 end
- 
+
 command :add do |c|
   c.syntax = 'pomo add <task> [options]'
   c.summary = 'Add a task'
@@ -134,10 +148,12 @@ command :break do |c|
   c.example 'Take a 30 minute break', 'pomo break 30'
   c.example 'Take a 30 minute break', 'pomo break --length 30'
   c.option '-l', '--length minutes', Integer, 'Change the default length in minutes'
+  c.option '-p', '--progress', 'Run with progress bar in foreground'
   c.action do |args, options|
+    options.default :progress => false
     options.default :length => args.first ? args.first.to_i : 5
-    task = Pomo::Task.new('Break time', options.__hash__)
-    task.start
+    task = Pomo::Break.new('Break time', options.__hash__)
+    task.start(config, :progress => options.progress)
   end
 end
 
@@ -220,7 +236,7 @@ command :incomplete do |c|
 end
 
 command :list do |c|
-  c.syntax = 'pomo list [options]'
+  c.syntax = 'pomo [list|ls] [options]'
   c.description = 'List all tasks'
   c.example 'List all tasks', 'pomo list'
   c.option '-c', '--complete', 'List only completed tasks'
@@ -236,4 +252,5 @@ command :list do |c|
     say ' ' * 55 + '%d minutes' % total
   end
 end
+alias_command :ls, :list
 
