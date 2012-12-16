@@ -1,3 +1,8 @@
+2.0.1 / 2012-12-16
+==================
+
+  * Minor fix bug release for tmux status bar coloring.
+
 2.0.0 / 2012-12-16
 ==================
 
