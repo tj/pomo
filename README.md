@@ -45,34 +45,37 @@ Taken from `pomo help`:
 
   * Get started by adding a task:
 
-        $ pomo add "Fix IE stying issues"
+        $ pomo add "Fix IE6 stying issues"
     
     And another:
 
-        $ pomo add "Destroy IE" --description "because IE is terrible"
+        $ pomo add "Destroy IE6" --description "because IE6 is terrible"
     
   * List your tasks (or use `pomo` which defaults to `pomo list`):
 
         $ pomo list
-            0. Fix IE stying issues                : 25 minutes
-            1. Destroy IE                          : 25 minutes
+            0. Fix IE6 stying issues                : 25 minutes
+            1. Destroy IE6                          : 25 minutes
 
   * Start the first incomplete task:
 
         $ pomo start
-        Started Fix IE stying issues, you have 25 minutes :)
+
+    A notification window will display:
+
+![Pomo OS X Notification](http://i.imgur.com/iEfdZ.png)
 
   * Alternatively, you can start the first incomplete task with a progress bar:
 
         $ pomo start -p
-        Started Fix IE stying issues, you have 25 minutes :)
+        Started Fix IE6 stying issues, you have 25 minutes :)
         (=........................) 24 minutes remaining
     
   * Once you have completed the task, list again (alternatively `pomo ls`):
 
         $ pomo ls
-          ✓ 0. Fix IE stying issues                : 25 minutes
-            1. Destroy IE                          : 25 minutes
+          ✓ 0. Fix IE6 stying issues                : 25 minutes
+            1. Destroy IE6                          : 25 minutes
         
   * Or take a break:
 
@@ -83,12 +86,12 @@ Taken from `pomo help`:
   * List only remaining tasks:
 
         $ pomo ls --incomplete
-            1. Destroy IE                          : 25 minutes
+            1. Destroy IE6                          : 25 minutes
         
   * List only completed tasks:
 
         $ pomo ls --complete
-          ✓ 0. Fix IE stying issues                : 25 minutes
+          ✓ 0. Fix IE6 stying issues                : 25 minutes
 
   * At any time mid-task you may terminate pomo via CTRL + C, at which
     time you may manually complete the task:
