@@ -19,13 +19,6 @@ module Pomo
     attr_reader :notifier
 
     ##
-    # Write ~/.pomo_stat file.
-    #
-    # values: true | false
-
-    attr_accessor :pomo_stat
-
-    ##
     # Refresh tmux status bar.
     #
     # values: true | false
@@ -37,7 +30,6 @@ module Pomo
     def initialize
       options = {
         :notifier  => default_notifier,
-        :pomo_stat => false,
         :tmux      => false
       }
 
@@ -52,7 +44,6 @@ module Pomo
       end
 
       @notifier  = options[:notifier]
-      @pomo_stat = options[:pomo_stat]
       @tmux      = options[:tmux]
     end
 
