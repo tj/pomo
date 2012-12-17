@@ -1,3 +1,9 @@
+2.0.2 / 2012-12-18
+==================
+
+  * Fixed Growl support. Closes #29
+  * Removed unused configuration option `pomo_stat` from `.pomorc`
+
 2.0.1 / 2012-12-16
 ==================
 
