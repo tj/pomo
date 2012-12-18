@@ -1,13 +1,15 @@
+require 'rbconfig'
+require 'pomo/os'
+require 'terminal-notifier' if Pomo::OS.mac?
+require 'growl'             if Pomo::OS.mac? || Pomo::OS.windows?
+require 'libnotify'         if Pomo::OS.linux?
 require 'yaml'
 require 'octokit'
-require 'terminal-notifier' if /darwin/ =~ RUBY_PLATFORM
-require 'growl'             if /darwin/ =~ RUBY_PLATFORM
-require 'libnotify'         if /linux/ =~ RUBY_PLATFORM
 require 'pomo/configuration'
 require 'pomo/notifier'
-require 'pomo/notifier/notification_center'
-require 'pomo/notifier/growl'
-require 'pomo/notifier/libnotify'
+require 'pomo/notifier/notification_center_notifier'
+require 'pomo/notifier/growl_notifier'
+require 'pomo/notifier/libnotify_notifier'
 require 'pomo/list'
 require 'pomo/task'
 require 'pomo/github_task'

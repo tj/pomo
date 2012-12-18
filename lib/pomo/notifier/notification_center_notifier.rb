@@ -1,7 +1,7 @@
 
 module Pomo
   class Notifier
-    class NotificationCenter
+    class NotificationCenterNotifier
       def notify(message, opts = {})
         title = 'Pomo'
 

@@ -6,13 +6,13 @@ module Pomo
     # Initialize notifier library from configuration.
     def initialize(config)
       if config.notifier == 'notification_center'
-        @notifier = Pomo::Notifier::NotificationCenter.new
-      elsif config.notifier == 'libnotify'
-        @notifier = Pomo::Notifier::Growl.new
+        @notifier = Pomo::Notifier::NotificationCenterNotifier.new
       elsif config.notifier == 'growl'
-        @notifier = Pomo::Notifier::Libnotify.new
+        @notifier = Pomo::Notifier::GrowlNotifier.new
+      elsif config.notifier == 'libnotify'
+        @notifier = Pomo::Notifier::LibnotifyNotifier.new
       elsif config.notifier == 'quicksilver'
-        @notifier = Pomo::Notifier::Quicksilver.new
+        @notifier = Pomo::Notifier::QuicksilverNotifier.new
       end
     end
 

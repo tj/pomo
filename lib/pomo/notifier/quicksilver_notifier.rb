@@ -1,7 +1,7 @@
 
 module Pomo
   class Notifier
-    class Quicksilver
+    class QuicksilverNotifier
       def notify(message, opts = {})
         `osascript -e 'tell application "Quicksilver" to show large type "#{message.gsub('"', '\"')}"'`
       end
