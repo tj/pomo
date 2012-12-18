@@ -15,7 +15,17 @@ status bar.
 ## Installation
 
     $ gem install pomo
-    
+
+## Configuration
+
+Pomo uses `~/.pomorc` for configuration options.
+
+To initialize a default configuration file:
+
+    $ pomo
+
+See [Configuration Options](#configuration-options) for more details on all the available options.
+
 ## Task Selection API
 
 Taken from `pomo help`:
@@ -141,12 +151,8 @@ Taken from `pomo help`:
     auto-detect `./.pomo` in this directory, and utilize its contents.
 
         $ pomo init
-    
-## Configuration
 
-Pomo uses `~/.pomorc` for configuration options.
-
-Configuration options:
+## Configuration Options
 
 * `:notifier`: Notification library
     * Format: String
@@ -163,10 +169,11 @@ For example on Mac OS X Mountain Lion, `~/.pomorc` defaults to:
     :notifier: notification_center
     :tmux: false
 
-## tmux Status Bar Integration
+    
+### Tmux Status Bar Integration
 
-The Pomo timer can be displayed in tmux's status bar with the following
-configurations set:
+Pomo's timer can be displayed in tmux's status bar with the following
+configuration set:
 
     :tmux: true
 
@@ -179,4 +186,3 @@ green during a Pomodoro, red during the last 5 minutes of a Pomodoro,
 and blue during a break e.g.
 
 ![tmux status bar](http://i.imgur.com/uIzM3.png)
-
