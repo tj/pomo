@@ -1,6 +1,8 @@
 # -*- encoding: utf-8 -*-
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'rbconfig'
+require 'pomo/os'
 require 'pomo/version'
 
 Gem::Specification.new do |spec|
@@ -22,9 +24,9 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency('commander', '~> 4.1')
   spec.add_dependency('octokit', '~> 1.19')
-  spec.add_dependency('terminal-notifier', '~> 1.4') if /darwin/ =~ RUBY_PLATFORM
-  spec.add_dependency('growl', '~> 1.0')             if /darwin/ =~ RUBY_PLATFORM
-  spec.add_dependency('libnotify', '~> 0.8')         if /linux/ =~ RUBY_PLATFORM
+  spec.add_dependency('terminal-notifier', '~> 1.4') if Pomo::OS.mac?
+  spec.add_dependency('growl', '~> 1.0')             if Pomo::OS.mac? || Pomo::OS.windows?
+  spec.add_dependency('libnotify', '~> 0.8')         if Pomo::OS.linux?
 
   spec.add_development_dependency('rspec', '~> 2.12')
 end
