@@ -29,4 +29,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency('libnotify', '~> 0.8')         if Pomo::OS.linux?
 
   spec.add_development_dependency('rspec', '~> 2.12')
+  spec.add_development_dependency('yard')
 end
