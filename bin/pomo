@@ -59,7 +59,7 @@ command :start do |c|
 
     options.default :progress => false
     args = ['incomplete'] if args.empty?
-    list.find(*args) do |task, i|
+    list.find(*args) do |task|
       abort 'task already completed' if task.complete?
       task.start(config, :progress => options.progress, :list => list)
       break
@@ -130,7 +130,7 @@ command :edit do |c|
   c.option '-d', '--description string', 'Change the task description'
   c.option '-l', '--length minutes', Integer, 'Change the task length'
   c.action do |args, options|
-    list.find(*args) do |task, i|
+    list.find(*args) do |task|
       options.__hash__.each do |key, value|
         task.send :"#{key}=", value
       end
@@ -169,7 +169,7 @@ command :remove do |c|
   c.example 'Remove all but the first task', 'pomo rm 2..-1'
   c.example 'Remove all tasks', 'pomo rm all'
   c.action do |args, options|
-    list.find(*args) do |task, i|
+    list.find(*args) do |task|
       list.tasks -= [task]
       say "  - Removed #{task}"
     end
@@ -187,7 +187,7 @@ command :view do |c|
   c.example 'View the last task', 'pomo view last'
   c.example 'View the fifth task', 'pomo view 5'
   c.action do |args, options|
-    list.find(*args) do |task, i|
+    list.find(*args) do |task|
       say "\n"
       format = "%15s : %s\n"
       say format % ['name', task.name]
@@ -211,7 +211,7 @@ command :complete do |c|
   c.example 'Mark last task as complete', 'pomo complete last'
   c.example 'Mark fifth task as complete', 'pomo complete 5'
   c.action do |args, options|
-    list.find(*args) do |task, i|
+    list.find(*args) do |task|
       task.complete = true
       say "  - Completed #{task}"
     end
@@ -227,7 +227,7 @@ command :incomplete do |c|
   c.example 'Mark last task as not completed', 'pomo incomplete last'
   c.example 'Mark fifth task as not completed', 'pomo incomplete 5'
   c.action do |args, options|
-    list.find(*args) do |task, i|
+    list.find(*args) do |task|
       task.complete = false
       say "  - #{task} marked incomplete"
     end

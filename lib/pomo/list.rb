@@ -62,8 +62,15 @@ module Pomo
           found << task if args.any? { |a| a.to_i == i }
         end
       end
-      found.each_with_index do |task, i|
-        yield task, i
+
+      if block.arity == 1
+        found.each do |task|
+          yield task
+        end
+      elsif block.arity == 2
+        found.each_with_index do |task, i|
+          yield task, i
+        end
       end
     end
 
