@@ -60,6 +60,13 @@ module Pomo
     end
 
     ##
+    # Check if the task is a github issue.
+
+    def github?
+      false
+    end
+
+    ##
     # Start timing the task.
     def start(config, options = {})
       list = options[:list]

@@ -1,11 +1,5 @@
 
 module Pomo
-  class Task
-    def github?
-      false
-    end
-  end
-
   class GithubTask < Task
 
     ##
