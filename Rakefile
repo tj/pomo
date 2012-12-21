@@ -4,11 +4,6 @@ require 'yard'
 
 task :default => :spec
 
-desc 'Run specs'
-RSpec::Core::RakeTask.new(:spec) do |t|
-  t.verbose = false
-  t.rspec_opts = '--order random --color'
-end
+RSpec::Core::RakeTask.new(:spec)
 
-YARD::Rake::YardocTask.new do |t|
-end
+YARD::Rake::YardocTask.new(:doc)
