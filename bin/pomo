@@ -7,6 +7,7 @@ require 'pomo'
 program :version, Pomo::VERSION
 
 program :description, "Pomodoro time management.
+
     Most of the subcommands work directly with tasks, and
     because of this pomo provides a unified task selection api
     shown below which can be used with most of the commands
@@ -23,6 +24,8 @@ program :description, "Pomodoro time management.
     all        : selects all tasks              : Ex: pomo remove all
 "
 
+program :help_formatter, :compact
+
 program :int_message, "\nTerminated pomo" \
                       "\n  * previously running tasks not marked as complete" \
                       "\n  * manually complete a task with `$ pomo complete <task>`"
@@ -33,8 +36,9 @@ list = Pomo::List.new
 default_command :list
 
 command :init do |c|
-  c.syntax = 'pomo init [options]'
+  c.syntax      = 'pomo init [options]'
   c.description = 'Initialize pomo in the current directory'
+
   c.action do |args, options|
     Pomo::List.new :init => true
     say 'Initialized at `./.pomo`'
@@ -44,13 +48,14 @@ command :init do |c|
 end
 
 command :start do |c|
-  c.syntax = 'pomo start [task] [options]'
-  c.summary = 'Start a task'
+  c.syntax      = 'pomo start [task] [options]'
+  c.summary     = 'Start a task'
   c.description = 'Start a task, given the task [task] or the first task'
   c.example 'Start the first incomplete task', 'pomo start'
-  c.example 'Start the first task', 'pomo start 0'
-  c.example 'Start the first task', 'pomo start first'
-  c.example 'Start the fifth task', 'pomo start 5'
+  c.example 'Start the first task'           , 'pomo start 0'
+  c.example 'Start the first task'           , 'pomo start first'
+  c.example 'Start the fifth task'           , 'pomo start 5'
+
   c.option '-p', '--progress', 'Run with progress bar in foreground'
   c.action do |args, options|
     abort 'a task is already running' if list.running
@@ -66,11 +71,12 @@ command :start do |c|
 end
 
 command :import do |c|
-  c.syntax = 'pomo import <user> <project> [issue_number]'
-  c.summary = 'Import Github project issues'
+  c.syntax      = 'pomo import <user> <project> [issue_number]'
+  c.summary     = 'Import Github issue(s)'
   c.description = 'Import Github project issues which have not yet been closed'
   c.example 'Import all open Github issues from "visionmedia/pomo"', 'pomo import visionmedia pomo'
-  c.example 'Import Github issue #3 from "visionmedia/pomo"', 'pomo import visionmedia pomo 3'
+  c.example 'Import Github issue #3 from "visionmedia/pomo"'       , 'pomo import visionmedia pomo 3'
+
   c.action do |args, options|
     user = args.shift or raise('Github <user> is required')
     project = args.shift or raise('Github <project> is required')
@@ -102,11 +108,12 @@ command :import do |c|
 end
 
 command :add do |c|
-  c.syntax = 'pomo add <task> [options]'
-  c.summary = 'Add a task'
+  c.syntax      = 'pomo add <task> [options]'
+  c.summary     = 'Add a task'
   c.description = 'Add a task to the current list of tasks'
   c.example 'Adds the task "fix IE styling issues"', 'pomo add "fix IE styling issues"'
-  c.example 'Add a task with 60 minute limit', 'pomo add "create executable" --length 60'
+  c.example 'Add a task with 60 minute limit'      , 'pomo add "create executable" --length 60'
+
   c.option '-d', '--description string', 'Add verbose task description'
   c.option '-l', '--length minutes', Integer, 'Change the default length in minutes'
   c.action do |args, options|
@@ -118,12 +125,13 @@ command :add do |c|
 end
 
 command :edit do |c|
-  c.syntax = 'pomo edit [task ...] [options]'
-  c.summary = 'Edit tasks'
+  c.syntax      = 'pomo edit [task ...] [options]'
+  c.summary     = 'Edit task(s)'
   c.description = 'Edit the given task(s) or the first task'
-  c.example 'Changes the description for the first task', 'pomo edit first -d "fix IE styling issues"'
+  c.example 'Changes the description for the first task'           , 'pomo edit first -d "fix IE styling issues"'
   c.example 'Changes the description and length for the third task', 'pomo edit 3 -d "fix IE styling issues" -l 60'
-  c.example 'Changes the length of several tasks', 'pomo edit 1..5 -l 10'
+  c.example 'Changes the length of several tasks'                  , 'pomo edit 1..5 -l 10'
+
   c.option '-n', '--name string', 'Change the task name'
   c.option '-d', '--description string', 'Change the task description'
   c.option '-l', '--length minutes', Integer, 'Change the task length'
@@ -139,33 +147,38 @@ command :edit do |c|
 end
 
 command :break do |c|
-  c.syntax = 'pomo break [length] [options]'
-  c.summary = 'Take a break'
+  c.syntax      = 'pomo break [length] [options]'
+  c.summary     = 'Start a break'
   c.description = 'Take a break, defaults to 5 minutes or [length] or --length'
   c.example 'Take a five minute break', 'pomo break'
-  c.example 'Take a 30 minute break', 'pomo break 30'
-  c.example 'Take a 30 minute break', 'pomo break --length 30'
+  c.example 'Take a 30 minute break'  , 'pomo break 30'
+  c.example 'Take a 30 minute break'  , 'pomo break --length 30'
+
   c.option '-l', '--length minutes', Integer, 'Change the default length in minutes'
   c.option '-p', '--progress', 'Run with progress bar in foreground'
   c.action do |args, options|
     options.default :progress => false
-    options.default :length => args.first ? args.first.to_i : 5
-    task = Pomo::Break.new('Break time', options.__hash__)
-    task.start(config, :progress => options.progress)
+    options.default :length => 5
+
+    #options.default :length => args.first ? args.first.to_i : 5
+    #task = Pomo::Break.new('Break time', options.__hash__)
+    #task.start(config, :progress => options.progress)
+    say "#{options.__hash__}"
   end
 end
 
 command :remove do |c|
-  c.syntax = 'pomo [remove|rm] [task ...] [options]'
-  c.summary = 'Remove tasks'
+  c.syntax      = 'pomo [remove|rm] [task ...] [options]'
+  c.summary     = 'Remove task(s)'
   c.description = 'Remove task(s) or the first task'
-  c.example 'Remove the first task', 'pomo remove first'
-  c.example 'Remove the last task', 'pomo remove last'
-  c.example 'Remove the fifth task', 'pomo remove 5'
+  c.example 'Remove the first task'           , 'pomo remove first'
+  c.example 'Remove the last task'            , 'pomo remove last'
+  c.example 'Remove the fifth task'           , 'pomo remove 5'
   c.example 'Remove the fifth and second task', 'pomo rm 5 2'
-  c.example 'Remove a range of tasks', 'pomo rm 2..6'
-  c.example 'Remove all but the first task', 'pomo rm 2..-1'
-  c.example 'Remove all tasks', 'pomo rm all'
+  c.example 'Remove a range of tasks'         , 'pomo rm 2..6'
+  c.example 'Remove all but the first task'   , 'pomo rm 2..-1'
+  c.example 'Remove all tasks'                , 'pomo rm all'
+
   c.action do |args, options|
     list.find(*args) do |task|
       list.tasks -= [task]
@@ -177,13 +190,15 @@ end
 alias_command :rm, :remove
 alias_command :clear, :remove, 'all'
 
-command :view do |c|
-  c.syntax = 'pomo view [task ...] [options]'
-  c.summary = 'View verbose task information'
-  c.description = 'View verbose information for the given task(s) or the first task'
-  c.example 'View the first task', 'pomo view first'
-  c.example 'View the last task', 'pomo view last'
-  c.example 'View the fifth task', 'pomo view 5'
+# TODO remove view alias in 3.0 release
+command :show do |c|
+  c.syntax      = 'pomo show [task ...] [options]'
+  c.summary     = 'Show verbose task information'
+  c.description = 'Show verbose information for the given task(s) or the first task'
+  c.example 'Show the first task', 'pomo view first'
+  c.example 'Show the last task' , 'pomo view last'
+  c.example 'Show the fifth task', 'pomo view 5'
+
   c.action do |args, options|
     list.find(*args) do |task|
       say "\n"
@@ -194,20 +209,22 @@ command :view do |c|
       if task.github?
         say format % ['labels', task.labels.join(', ')] if task.labels and not task.labels.empty?
         say format % ['number', task.number ]
-        say format % ['uri', task.uri ]
+        say format % ['url', task.url ]
       end
     end
     say "\n"
   end
 end
+alias_command :view, :show
 
 command :complete do |c|
-  c.syntax = 'pomo complete [task ...] [options]'
-  c.summary = 'Mark tasks as completed'
+  c.syntax      = 'pomo complete [task ...] [options]'
+  c.summary     = 'Mark task(s) as completed'
   c.description = 'Mark the given task(s) or the first task to complete'
   c.example 'Mark first task as complete', 'pomo complete first'
-  c.example 'Mark last task as complete', 'pomo complete last'
+  c.example 'Mark last task as complete' , 'pomo complete last'
   c.example 'Mark fifth task as complete', 'pomo complete 5'
+
   c.action do |args, options|
     list.find(*args) do |task|
       task.complete = true
@@ -218,12 +235,13 @@ command :complete do |c|
 end
 
 command :incomplete do |c|
-  c.syntax = 'pomo incomplete [task ...] [options]'
-  c.summary = 'Mark tasks as incompleted'
+  c.syntax      = 'pomo incomplete [task ...] [options]'
+  c.summary     = 'Mark task(s) as incompleted'
   c.description = 'Mark the given task(s) or the first task as not completed'
   c.example 'Mark first task as not completed', 'pomo incomplete first'
-  c.example 'Mark last task as not completed', 'pomo incomplete last'
+  c.example 'Mark last task as not completed' , 'pomo incomplete last'
   c.example 'Mark fifth task as not completed', 'pomo incomplete 5'
+
   c.action do |args, options|
     list.find(*args) do |task|
       task.complete = false
@@ -234,9 +252,10 @@ command :incomplete do |c|
 end
 
 command :list do |c|
-  c.syntax = 'pomo [list|ls] [options]'
+  c.syntax      = 'pomo [list|ls] [options]'
   c.description = 'List all tasks'
   c.example 'List all tasks', 'pomo list'
+
   c.option '-c', '--complete', 'List only completed tasks'
   c.option '-i', '--incomplete', 'List only incompleted tasks'
   c.action do |args, options|
