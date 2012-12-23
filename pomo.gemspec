@@ -28,6 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency('growl', '~> 1.0')             if Pomo::OS.mac? || Pomo::OS.windows?
   spec.add_dependency('libnotify', '~> 0.8')         if Pomo::OS.linux?
 
+  spec.add_development_dependency('aruba', '~> 0.5.1')
   spec.add_development_dependency('rspec', '~> 2.12')
   spec.add_development_dependency('yard')
 end
