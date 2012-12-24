@@ -32,16 +32,30 @@ program :int_message, "\nTerminated pomo" \
                       "\n  * previously running tasks not marked as complete" \
                       "\n  * manually complete a task with `$ pomo complete <task>`"
 
-config = Pomo::Configuration.new
 list = Pomo::List.new
 
 default_command :list
+
+command :initconfig do |c|
+  c.syntax      = 'pomo initconfig [options]'
+  c.description = 'Initialize default configuration'
+  c.example 'Configure growl as notifier and no tmux integration', 'pomo initconfig --notifier growl --no-tmux'
+
+  c.option '--notifier <lib>', String, 'Specify notificaiton library: `notification_center`, `libnotify`, `growl`, `quicksilver`'
+  c.option '--[no-]progress'         , 'Run with progress bar'
+  c.option '--[no-]tmux'             , 'Refresh tmux status bar on timer change'
+  c.option '--[no-]force'            , 'force overwrite of existing config file'
+  c.action do |args, options|
+    Pomo::Configuration.save(options.__hash__)
+  end
+end
 
 command :init do |c|
   c.syntax      = 'pomo init [options]'
   c.description = 'Initialize pomo in the current directory'
 
   c.action do |args, options|
+    config = Pomo::Configuration.load
     Pomo::List.new :init => true
     say 'Initialized at `./.pomo`'
     say '  - Any commands run while in this directory will reference this file for tasks'
@@ -62,6 +76,8 @@ command :start do |c|
   c.action do |args, options|
     abort 'a task is already running' if list.running
 
+    config = Pomo::Configuration.load
+
     options.default :progress => false
     args = ['incomplete'] if args.empty?
     list.find(*args) do |task|
@@ -80,6 +96,7 @@ command :import do |c|
   c.example 'Import Github issue #3 from "visionmedia/pomo"'       , 'pomo import visionmedia pomo 3'
 
   c.action do |args, options|
+    config = Pomo::Configuration.load
     user = args.shift or raise('Github <user> is required')
     project = args.shift or raise('Github <project> is required')
     number = args.shift
@@ -119,6 +136,7 @@ command :add do |c|
   c.option '-d', '--description string', 'Add verbose task description'
   c.option '-l', '--length minutes', Integer, 'Change the default length in minutes'
   c.action do |args, options|
+    config = Pomo::Configuration.load
     task = Pomo::Task.new(args.shift, options.__hash__)
     list << task
     list.save
@@ -138,6 +156,7 @@ command :edit do |c|
   c.option '-d', '--description string', 'Change the task description'
   c.option '-l', '--length minutes', Integer, 'Change the task length'
   c.action do |args, options|
+    config = Pomo::Configuration.load
     list.find(*args) do |task|
       options.__hash__.each do |key, value|
         task.send :"#{key}=", value
@@ -162,6 +181,8 @@ command :break do |c|
     options.default :progress => false
     options.default :length => 5
 
+    config = Pomo::Configuration.load
+
     #options.default :length => args.first ? args.first.to_i : 5
     #task = Pomo::Break.new('Break time', options.__hash__)
     #task.start(config, :progress => options.progress)
@@ -182,6 +203,7 @@ command :remove do |c|
   c.example 'Remove all tasks'                , 'pomo rm all'
 
   c.action do |args, options|
+    config = Pomo::Configuration.load
     list.find(*args) do |task|
       list.tasks -= [task]
       say "  - Removed #{task}"
@@ -202,6 +224,7 @@ command :show do |c|
   c.example 'Show the fifth task', 'pomo view 5'
 
   c.action do |args, options|
+    config = Pomo::Configuration.load
     list.find(*args) do |task|
       say "\n"
       format = "%15s : %s\n"
@@ -228,6 +251,7 @@ command :complete do |c|
   c.example 'Mark fifth task as complete', 'pomo complete 5'
 
   c.action do |args, options|
+    config = Pomo::Configuration.load
     list.find(*args) do |task|
       task.complete = true
       say "  - Completed #{task}"
@@ -245,6 +269,7 @@ command :incomplete do |c|
   c.example 'Mark fifth task as not completed', 'pomo incomplete 5'
 
   c.action do |args, options|
+    config = Pomo::Configuration.load
     list.find(*args) do |task|
       task.complete = false
       say "  - #{task} marked incomplete"
@@ -261,6 +286,7 @@ command :list do |c|
   c.option '-c', '--complete', 'List only completed tasks'
   c.option '-i', '--incomplete', 'List only incompleted tasks'
   c.action do |args, options|
+    config = Pomo::Configuration.load
     total = 0
     list.tasks.each_with_index do |task, i|
       next if options.complete && !task.complete?
