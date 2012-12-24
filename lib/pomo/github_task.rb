@@ -23,6 +23,11 @@ module Pomo
     attr_accessor :number
 
     ##
+    # Absolute URI.
+
+    attr_accessor :url
+
+    ##
     # Initialize with _name_ and _options_.
 
     def initialize name = nil, options = {}
@@ -31,17 +36,17 @@ module Pomo
     end
 
     ##
+    # Quoted github issue name and number.
+
+    def to_s
+      "#%-3s %s" % [ number, name]
+    end
+
+    ##
     # Check if the task is a github issue.
 
     def github?
       true
-    end
-
-    ##
-    # Absolute URI to github issue.
-
-    def uri
-      "https://github.com/#{username}/#{project}/issues#issue/#{number}"
     end
 
   end

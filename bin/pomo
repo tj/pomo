@@ -113,7 +113,8 @@ command :import do |c|
           :project => project,
           :description => issue.body,
           :labels => issue.labels.map(&:name),
-          :number => issue.number
+          :number => issue.number,
+          :url => issue.html_url
         )
         list << task
         say "  - Added #{task}"
@@ -291,10 +292,10 @@ command :list do |c|
     list.tasks.each_with_index do |task, i|
       next if options.complete && !task.complete?
       next if options.incomplete && task.complete?
-      say ' %s %2d. %-45s : %d minutes' % [task.complete? ? '✓' : ' ', i, task.to_s, task.length]
+      say ' %s %2d. %-50s : %d minutes' % [task.complete? ? '✓' : ' ', i, task.to_s, task.length]
       total += task.length
     end
-    say ' ' * 55 + '%d minutes' % total
+    say ' ' * 60 + '%d minutes' % total
   end
 end
 alias_command :ls, :list
