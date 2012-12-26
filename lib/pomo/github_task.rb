@@ -43,11 +43,13 @@ module Pomo
     end
 
     ##
-    # Check if the task is a github issue.
+    # Output verbose task information.
 
-    def github?
-      true
+    def verbose_output(format)
+      super(format)
+      say format % ['labels', labels.join(', ')] if labels and not labels.empty?
+      say format % ['project', [username, project].join('/')]
+      say format % ['url', url ]
     end
-
   end
 end

@@ -229,14 +229,7 @@ command :show do |c|
     list.find(*args) do |task|
       say "\n"
       format = "%15s : %s\n"
-      say format % ['name', task.name]
-      say format % ['length', "#{task.length} minutes"]
-      say format % ['description', task.description] if task.description and not task.description.empty?
-      if task.github?
-        say format % ['labels', task.labels.join(', ')] if task.labels and not task.labels.empty?
-        say format % ['number', task.number ]
-        say format % ['url', task.url ]
-      end
+      task.verbose_output(format)
     end
     say "\n"
   end

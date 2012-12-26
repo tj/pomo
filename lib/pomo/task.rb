@@ -42,7 +42,7 @@ module Pomo
     # Quoted task name.
 
     def to_s
-      name.inspect
+      name
     end
 
     ##
@@ -60,10 +60,11 @@ module Pomo
     end
 
     ##
-    # Check if the task is a github issue.
-
-    def github?
-      false
+    # Output verbose task information
+    def verbose_output(format)
+      say format % ['name', self]
+      say format % ['length', "#{length} minutes"]
+      say format % ['description', description] if description and not description.empty?
     end
 
     ##

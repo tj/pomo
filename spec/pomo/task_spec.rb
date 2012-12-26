@@ -8,10 +8,4 @@ describe Pomo::Task do
     it 'does nada'
   end
 
-  describe '#github?' do
-    it 'returns false' do
-      expect(task.github?).to be_false
-    end
-  end
-
 end
