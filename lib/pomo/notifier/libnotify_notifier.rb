@@ -1,3 +1,4 @@
+require 'libnotify' if Pomo::OS.linux?
 
 module Pomo
   class Notifier

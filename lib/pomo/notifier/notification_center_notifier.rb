@@ -1,3 +1,4 @@
+require 'terminal-notifier' if Pomo::OS.mac?
 
 module Pomo
   class Notifier

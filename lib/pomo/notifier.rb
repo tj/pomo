@@ -1,3 +1,6 @@
+require 'pomo/notifier/growl_notifier'
+require 'pomo/notifier/libnotify_notifier'
+require 'pomo/notifier/notification_center_notifier'
 
 module Pomo
   class Notifier

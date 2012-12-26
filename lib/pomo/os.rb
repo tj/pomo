@@ -1,3 +1,5 @@
+require 'rbconfig'
+
 module Pomo
   module OS
     module_function

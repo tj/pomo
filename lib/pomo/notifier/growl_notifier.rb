@@ -1,3 +1,4 @@
+require 'growl' if Pomo::OS.mac? || Pomo::OS.windows?
 
 module Pomo
   class Notifier
