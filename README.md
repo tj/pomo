@@ -186,3 +186,16 @@ green during a Pomodoro, red during the last 5 minutes of a Pomodoro,
 and blue during a break e.g.
 
 ![tmux status bar](http://i.imgur.com/uIzM3.png)
+
+## Contributing
+
+We :heart: pull requests and feedback. Feel free to
+[submit a ticket](https://github.com/visionmedia/pomo/issues) or see
+[CONTRIBUTING](https://github.com/visionmedia/pomo/blob/master/CONTRIBUTING.md)
+for details on pull requests.
+
+## Copyright
+
+Copyright (c) 2012 TJ Holowaychuk. See
+[LICENSE](https://github.com/visionmedia/pomo/blob/master/LICENSE.md)
+for details.
