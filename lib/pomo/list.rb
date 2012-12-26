@@ -58,18 +58,16 @@ module Pomo
       elsif args.any? { |arg| arg =~ /(\d+)\.\.(-?\d+)/ }
         found = tasks[$1.to_i..$2.to_i]
       else
-        tasks.each_with_index do |task, i|
-          found << task if args.any? { |a| a.to_i == i }
-        end
+        found = tasks.values_at(*args.select{|arg| arg =~ /\d+/}.map(&:to_i))
       end
 
-      if block.arity == 1
-        found.each do |task|
-          yield task
-        end
-      elsif block.arity == 2
+      if block.arity == 2
         found.each_with_index do |task, i|
           yield task, i
+        end
+      else
+        found.each do |task|
+          yield task
         end
       end
     end
