@@ -25,6 +25,7 @@ module Pomo
 
     ##
     # Initialize configuration.
+
     def initialize(options = {})
       @notifier = options[:notifier]
       @progress = options[:progress]
@@ -33,6 +34,7 @@ module Pomo
 
     ##
     # Load configuration or default_options.
+
     def self.load
       if !(File.exists? config_file)
         File.open(config_file, 'w') { |file| YAML::dump(default_options, file) }
@@ -45,6 +47,7 @@ module Pomo
 
     ##
     # Save configuration.
+
     def self.save(options = {})
       options = default_options.merge(options)
 

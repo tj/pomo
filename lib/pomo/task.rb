@@ -61,6 +61,7 @@ module Pomo
 
     ##
     # Output verbose task information
+
     def verbose_output(format)
       say format % ['name', self]
       say format % ['length', "#{length} minutes"]
@@ -69,6 +70,7 @@ module Pomo
 
     ##
     # Start timing the task.
+
     def start(config, options = {})
       list = options[:list]
       progress = options[:progress]

@@ -7,6 +7,7 @@ module Pomo
 
     ##
     # Initialize notifier library from configuration.
+
     def initialize(config)
       if config.notifier == 'notification_center'
         @notifier = Pomo::Notifier::NotificationCenterNotifier.new
@@ -21,6 +22,7 @@ module Pomo
 
     ##
     # Send message to notification library.
+
     def notify(message, opts = {})
       @notifier.notify(message, opts)
     end
