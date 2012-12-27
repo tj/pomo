@@ -12,9 +12,8 @@ describe Pomo::List do
   describe '#find' do
     context "given 'all'" do
       it 'yields all tasks' do
-        expect { |b| list.find('all', &b) }.to yield_successive_args(tasks[0], tasks[1], tasks[2])
+        expect { |b| list.find('all', 'first', 'last', &b) }.to yield_successive_args(tasks[0], tasks[1], tasks[2])
       end
-
     end
 
     context "given 'first'" do
@@ -52,6 +51,12 @@ describe Pomo::List do
     context "given an index or multiple indexes e.g. '2 8 1'" do
       it 'yields the tasks at the given index(es)' do
         expect { |b| list.find('0', '2', &b) }.to yield_successive_args(tasks[0], tasks[2])
+      end
+    end
+
+    context 'given multiple arguments' do
+      it 'yields the tasks according to the above specs' do
+        expect { |b| list.find('first', 'last', &b) }.to yield_successive_args(tasks[0], tasks[2])
       end
     end
   end

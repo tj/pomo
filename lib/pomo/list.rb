@@ -46,20 +46,27 @@ module Pomo
     def find *args, &block
       found = []
       found << tasks.first if args.empty?
-      if args.include? 'all'
-        found = tasks
-      elsif args.include? 'first'
-        found << tasks.first
-      elsif args.include? 'last'
-        found << tasks.last
-      elsif args.include?('complete') || args.include?('completed')
-        found = tasks.select { |task| task.complete? }
-      elsif args.include? 'incomplete'
-        found = tasks.select { |task| not task.complete? }
-      elsif args.any? { |arg| arg =~ /(\d+)\.\.(-?\d+)/ }
-        found = tasks[$1.to_i..$2.to_i]
-      else
-        found = tasks.values_at(*args.select{|arg| arg =~ /\d+/}.map(&:to_i))
+
+      args.each do |arg|
+        case arg
+        when 'all'
+          found = tasks
+          break
+        when 'first'
+          found << tasks.first
+        when 'last'
+          found << tasks.last
+        when 'complete'
+          found.concat tasks.select { |task| task.complete? }
+        when 'completed'
+          found.concat tasks.select { |task| task.complete? }
+        when 'incomplete'
+          found.concat tasks.select { |task| not task.complete? }
+        when /^(\d+)$/
+          found << tasks[$1.to_i]
+        when /^(\d+)\.\.(-?\d+)$/
+          found.concat tasks[$1.to_i..$2.to_i]
+        end
       end
 
       if block.arity == 2

@@ -20,8 +20,9 @@ program :description, "Pomodoro time management.
 
     Multiple task selection:
     [n ]+      : selects several tasks by index : Ex: pomo remove 2 8 1
-    n..n       : selects a range of tasks       : Ex: pomo remove 5..9
-    n..-n      : selects a range of tasks       : Ex: pomo remove 2..-1
+    [n..n]+    : selects a range of tasks       : Ex: pomo remove 5..9 11..14
+    [n..-n]+   : selects a range of tasks       : Ex: pomo remove 2..-1
+    [api ]+    : selects several tasks by api   : Ex: pomo remove first last
     complete   : selects complete tasks         : Ex: pomo remove complete
     incomplete : selects incomplete tasks       : Ex: pomo remove incomplete
     all        : selects all tasks              : Ex: pomo remove all"
