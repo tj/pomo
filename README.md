@@ -22,7 +22,7 @@ Pomo uses `~/.pomorc` for configuration options.
 
 To initialize a default configuration file:
 
-    $ pomo
+    $ pomo initconfig
 
 See [Configuration Options](#configuration-options) for more details on all the available options.
 
@@ -30,17 +30,21 @@ See [Configuration Options](#configuration-options) for more details on all the 
 
 Taken from `pomo help`:
 
-    Most of the subcommands work directly with tasks,
-    and because of this pomo provides a unified task selection api
-    shown below which can be used with most of the commands 
-    (those with [task ...] in their synopsis). 
-  
+    pomo provides a unified task selection api which can be used
+    with most of the commands. Commands with [task] or [task ...]
+    in their synopsis accept only single or both single and multiple
+    task selection, respectively.
+
+    Single task selection:
     n          : selects a single task by index : Ex: pomo remove 1
-    [n ]+      : selects several tasks by index : Ex: pomo remove 2 8 1
-    n..n       : selects a range of tasks       : Ex: pomo remove 5..9
-    n..-n      : selects a range of tasks       : Ex: pomo remove 2..-1
     first      : selects the first task         : Ex: pomo remove first
     last       : selects the last task          : Ex: pomo remove last
+
+    Multiple task selection:
+    [n ]+      : selects several tasks by index : Ex: pomo remove 2 8 1
+    [n..n]+    : selects a range of tasks       : Ex: pomo remove 5..9 11..14
+    [n..-n]+   : selects a range of tasks       : Ex: pomo remove 2..-1
+    [api ]+    : selects several tasks by api   : Ex: pomo remove first last
     complete   : selects complete tasks         : Ex: pomo remove complete
     incomplete : selects incomplete tasks       : Ex: pomo remove incomplete
     all        : selects all tasks              : Ex: pomo remove all
@@ -154,28 +158,32 @@ Taken from `pomo help`:
 
 ## Configuration Options
 
-* `:notifier`: Notification library
-    * Format: String
-    * Default: depends on OS
-    * Valid values: `notification_center`, `libnotify`, `growl`, `quicksilver`
-* `:tmux`: Refresh tmux status bar on timer change
-    * Format: Boolean
-    * Default: `false`
-    * Valid values: `true`, `false`
+The default configuration for pomo is as follows:
 
-For example on Mac OS X Mountain Lion, `~/.pomorc` defaults to:
+* Notification library is set to Notification Center on OSX 10.8; Growl on OSX
+10.7 or less and Windows; and libnotify on Linux
+* Progress bar is turned off
+* tmux integration is turned off
 
-    ---
-    :notifier: notification_center
-    :tmux: false
+Settings are easily customizable. Taken from `pomo help initconfig`:
 
-    
+    Examples:
+
+    # Configure with notification center, no progress bar, and tmux integration
+    pomo initconfig --notifier notification_center --no-progress --tmux
+
+    Options:
+      --notifier <lib>     Specify notificaiton library: `notification_center`, `libnotify`, `growl`, `quicksilver` 
+      --[no-]progress      Run with progress bar 
+      --[no-]tmux          Refresh tmux status bar on timer change 
+      --[no-]force         force overwrite of existing config file 
+
 ### Tmux Status Bar Integration
 
 Pomo's timer can be displayed in tmux's status bar with the following
 configuration set:
 
-    :tmux: true
+    pomo initconfig --tmux
 
 Then add the below to your `~/.tmux.conf`:
 

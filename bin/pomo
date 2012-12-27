@@ -40,7 +40,7 @@ default_command :list
 command :initconfig do |c|
   c.syntax      = 'pomo initconfig [options]'
   c.description = 'Initialize default configuration'
-  c.example 'Configure growl as notifier and no tmux integration', 'pomo initconfig --notifier growl --no-tmux'
+  c.example 'Configure with notification center, no progress bar, and tmux integration', 'pomo initconfig --notifier notification_center --no-progress --tmux'
 
   c.option '--notifier <lib>', String, 'Specify notificaiton library: `notification_center`, `libnotify`, `growl`, `quicksilver`'
   c.option '--[no-]progress'         , 'Run with progress bar'
