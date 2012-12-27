@@ -168,11 +168,9 @@ command :break do |c|
     options.default :length => 5
 
     config = Pomo::Configuration.load
-
     #options.default :length => args.first ? args.first.to_i : 5
-    #task = Pomo::Break.new('Break time', options.__hash__)
-    #task.start(config, :progress => options.progress)
-    say "#{options.__hash__}"
+    task = Pomo::Break.new('Break time', options.__hash__)
+    task.start(config, :progress => options.progress)
   end
 end
 
