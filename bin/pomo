@@ -194,11 +194,33 @@ command :remove do |c|
       list.tasks -= [task]
       say "  - Removed #{task}"
     end
-   list.save
+    list.save
   end
 end
 alias_command :rm, :remove
 alias_command :clear, :remove, 'all'
+
+command :move do |c|
+  c.syntax      = 'pomo move [from] [to]'
+  c.summary     = 'Move a task'
+  c.description = 'Move a task to a different position in the current list'
+  c.example 'Move task 4 to position 2', 'pomo move 4 2'
+  c.example 'Move last task to first position', 'pomo move last first'
+
+  c.action do |args, options|
+    config = Pomo::Configuration.load
+    from = args.shift or raise('<from> is required')
+    to = args.shift or raise('<to> is required')
+    list.find(from) do |task|
+      list.find(to) do |other_task|
+        list.move(from, to)
+        say "  - Moved #{task} from position #{from} to #{to}"
+      end
+    end
+    list.save
+  end
+end
+alias_command :mv, :move
 
 # TODO remove view alias in 3.0 release
 command :show do |c|

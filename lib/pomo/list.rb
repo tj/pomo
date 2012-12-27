@@ -69,6 +69,8 @@ module Pomo
         end
       end
 
+      found.compact!
+
       if block.arity == 2
         found.each_with_index do |task, i|
           yield task, i
@@ -96,6 +98,13 @@ module Pomo
     alias :<< :add
 
     ##
+    # Move task at _from_ index to _to_ index (requres saving).
+
+    def move from, to
+      @tasks.insert(index(to), @tasks.delete_at(index(from)))
+    end
+
+    ##
     # Save the list.
 
     def save
@@ -113,5 +122,17 @@ module Pomo
       self
     end
 
+    private
+
+    def index arg
+      case arg
+      when 'first'
+        0
+      when 'last'
+        @tasks.size - 1
+      when /^(\d+)$/
+        $1.to_i
+      end
+    end
   end
 end
