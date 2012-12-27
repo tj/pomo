@@ -132,6 +132,8 @@ module Pomo
         @tasks.size - 1
       when /^(\d+)$/
         $1.to_i
+      else
+        abort "Invalid argument: #{arg}. See 'pomo help move'"
       end
     end
   end
