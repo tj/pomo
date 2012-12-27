@@ -285,6 +285,8 @@ command :list do |c|
   c.option '-c', '--complete', 'List only completed tasks'
   c.option '-i', '--incomplete', 'List only incompleted tasks'
   c.action do |args, options|
+    abort "invalid command. See 'pomo help' for more information" unless args.empty?
+
     config = Pomo::Configuration.load
     total = 0
     list.tasks.each_with_index do |task, i|
