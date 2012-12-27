@@ -31,7 +31,7 @@ module Pomo
     ##
     # Initialize with _name_ and _options_.
 
-    def initialize name = nil, options = {}
+    def initialize(name = nil, options = {})
       super
       options.each { |k,v| send :"#{k}=", v }
     end

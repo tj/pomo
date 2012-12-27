@@ -30,7 +30,7 @@ module Pomo
     ##
     # Initialize with _name_ and _options_.
 
-    def initialize name = nil, options = {}
+    def initialize(name = nil, options = {})
       @name = name or raise '<task> required'
       @description = options.delete :description
       @length = options.fetch :length, 25

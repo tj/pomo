@@ -16,7 +16,7 @@ module Pomo
     ##
     # Initialize with _path_.
 
-    def initialize opts = {}
+    def initialize(opts = {})
       if opts[:init]
         path = '.pomo'
       else
@@ -36,14 +36,16 @@ module Pomo
     #  * n n n
     #  * n..n
     #  * n..-n
+    #  * n..n n..n n..n
     #  * first
     #  * last
+    #  * first last
     #  * incomplete
     #  * complete[d]
     #  * all
     #
 
-    def find *args, &block
+    def find(*args, &block)
       found = []
       found << tasks.first if args.empty?
 
@@ -92,7 +94,7 @@ module Pomo
     ##
     # Add _task_ to the list in memory (requires saving).
 
-    def add task
+    def add(task)
       @tasks << task
     end
     alias :<< :add
@@ -100,7 +102,7 @@ module Pomo
     ##
     # Move task at _from_ index to _to_ index (requres saving).
 
-    def move from, to
+    def move(from, to)
       @tasks.insert(index(to), @tasks.delete_at(index(from)))
     end
 
@@ -124,7 +126,7 @@ module Pomo
 
     private
 
-    def index arg
+    def index(arg)
       case arg
       when 'first'
         0
