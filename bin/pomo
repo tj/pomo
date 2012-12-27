@@ -100,30 +100,14 @@ command :import do |c|
     user = args.shift or raise('Github <user> is required')
     project = args.shift or raise('Github <project> is required')
     number = args.shift
-    begin
-      if number
-        issues = [Octokit.issue({:username => user, :repo => project}, number)]
-      else
-        issues = Octokit.list_issues({:username => user, :repo => project}, :state => 'open', :sort => 'created')
-      end
-      issues.each_with_index do |issue, index|
-        say "Importing issues from https://github.com/#{user}/#{project}" if index == 0
-        task = Pomo::GithubTask.new(issue.title,
-          :username => user,
-          :project => project,
-          :description => issue.body,
-          :labels => issue.labels.map(&:name),
-          :number => issue.number,
-          :url => issue.html_url
-        )
-        list << task
-        say "  - Added #{task}"
-      end
-      list.save
-    rescue Octokit::NotFound => e
-      say '404: This is not the repo you are looking for.'
-      say e.message
+
+    say "Importing issues from https://github.com/#{user}/#{project}"
+    tasks = Pomo::GithubTask.import(user, project, number)
+    tasks.each do |task|
+      list << task
+      say "  - Added #{task}"
     end
+    list.save
   end
 end
 

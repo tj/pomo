@@ -1,4 +1,3 @@
-require 'octokit'
 require 'pomo/os'
 require 'pomo/configuration'
 require 'pomo/notifier'

@@ -8,4 +8,8 @@ describe Pomo::Task do
     it 'does nada'
   end
 
+  describe '#stop' do
+    it 'does nada'
+  end
+
 end
