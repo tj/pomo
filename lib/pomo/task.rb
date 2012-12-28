@@ -1,3 +1,4 @@
+# coding: utf-8
 
 module Pomo
   class Task
@@ -66,6 +67,7 @@ module Pomo
       say format % ['name', self]
       say format % ['length', "#{length} minutes"]
       say format % ['description', description] if description and not description.empty?
+      say format % ['complete', complete ? '[✓]' : '[ ]']
     end
 
     ##

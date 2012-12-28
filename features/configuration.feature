@@ -1,4 +1,3 @@
-@announce
 Feature: Configure pomo
   In order to use pomo
   As a user
