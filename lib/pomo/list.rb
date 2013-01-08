@@ -20,7 +20,7 @@ module Pomo
       if opts[:init]
         path = '.pomo'
       else
-        path = File.exists?('.pomo') ? '.pomo' : File.join(ENV['HOME'],'.pomo')
+        path = (File.exists?('.pomo') && ENV['POMO_ENV']!='test') ? '.pomo' : File.join(ENV['HOME'],'.pomo')
       end
       @path = File.expand_path path
       @tasks = []
