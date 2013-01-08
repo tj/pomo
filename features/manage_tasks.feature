@@ -18,6 +18,31 @@ Feature: Manage Pomodoro task
 
     """
 
+  Scenario: Copy tasks
+    When I run `pomo add 'Remember the milk'`
+    And I run `pomo complete first`
+    And I run `pomo show first`
+    Then the output from "pomo show first" should contain exactly:
+    """
+
+               name : Remember the milk
+             length : 25 minutes
+           complete : [✓]
+
+
+    """
+    When I run `pomo copy first`
+    And I run `pomo show last`
+    Then the output from "pomo show last" should contain exactly:
+    """
+
+               name : Remember the milk
+             length : 25 minutes
+           complete : [ ]
+
+
+    """
+
   Scenario: Complete tasks
     When I run `pomo add 'Remember the milk'`
     And I run `pomo complete first`

@@ -198,6 +198,30 @@ end
 alias_command :rm, :remove
 alias_command :clear, :remove, 'all'
 
+command :copy do |c|
+  c.syntax      = 'pomo [copy|cp] [task...]'
+  c.summary     = 'Copy task(s)'
+  c.description = 'Copy task(s) to the end of the current list as an incomplete task'
+  c.example 'Copy first task'               , 'pomo copy first'
+  c.example 'Copy the fourth task'          , 'pomo cp 4'
+  c.example 'Copy the fifth and second task', 'pomo cp 5 2'
+  c.example 'Copy a range of tasks'         , 'pomo cp 2..6'
+  c.example 'Copy all but the first task'   , 'pomo cp 2..-1'
+  c.example 'Copy all tasks'                , 'pomo cp all'
+
+  c.action do |args, options|
+    config = Pomo::Configuration.load
+    list.find(*args) do |task|
+      dup_task = Marshal::load(Marshal.dump(task))
+      dup_task.complete = false
+      list.tasks << dup_task
+      say "  - Copied #{task}"
+    end
+    list.save
+  end
+end
+alias_command :cp, :copy
+
 command :move do |c|
   c.syntax      = 'pomo move [from] [to]'
   c.summary     = 'Move a task'
