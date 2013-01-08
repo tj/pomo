@@ -179,8 +179,7 @@ command :remove do |c|
   c.summary     = 'Remove task(s)'
   c.description = 'Remove task(s) or the first task'
   c.example 'Remove the first task'           , 'pomo remove first'
-  c.example 'Remove the last task'            , 'pomo remove last'
-  c.example 'Remove the fifth task'           , 'pomo remove 5'
+  c.example 'Remove the fifth task'           , 'pomo rm 5'
   c.example 'Remove the fifth and second task', 'pomo rm 5 2'
   c.example 'Remove a range of tasks'         , 'pomo rm 2..6'
   c.example 'Remove all but the first task'   , 'pomo rm 2..-1'
@@ -226,8 +225,8 @@ command :move do |c|
   c.syntax      = 'pomo move [from] [to]'
   c.summary     = 'Move a task'
   c.description = 'Move a task to a different position in the current list'
-  c.example 'Move task 4 to position 2', 'pomo move 4 2'
-  c.example 'Move last task to first position', 'pomo move last first'
+  c.example 'Move task 4 to position 2'       , 'pomo move 4 2'
+  c.example 'Move last task to first position', 'pomo mv last first'
 
   c.action do |args, options|
     config = Pomo::Configuration.load
@@ -249,9 +248,9 @@ command :show do |c|
   c.syntax      = 'pomo show [task ...] [options]'
   c.summary     = 'Show verbose task information'
   c.description = 'Show verbose information for the given task(s) or the first task'
-  c.example 'Show the first task', 'pomo view first'
-  c.example 'Show the last task' , 'pomo view last'
-  c.example 'Show the fifth task', 'pomo view 5'
+  c.example 'Show the first task', 'pomo show first'
+  c.example 'Show the last task' , 'pomo show last'
+  c.example 'Show the fifth task', 'pomo show 5'
 
   c.action do |args, options|
     config = Pomo::Configuration.load
