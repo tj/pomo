@@ -73,13 +73,13 @@ command :start do |c|
   c.example 'Start the first task'           , 'pomo start first'
   c.example 'Start the fifth task'           , 'pomo start 5'
 
-  c.option '-p', '--progress', 'Run with progress bar in foreground'
+  c.option '--notifier <lib>', String, 'Specify notificaiton library: `notification_center`, `libnotify`, `growl`, `quicksilver`'
+  c.option '--[no-]progress'         , 'Run with progress bar'
+  c.option '--[no-]tmux'             , 'Refresh tmux status bar on timer change'
   c.action do |args, options|
     abort 'a task is already running' if list.running
 
-    config = Pomo::Configuration.load
-
-    options.default :progress => false
+    config = Pomo::Configuration.load(options.__hash__)
     args = ['incomplete'] if args.empty?
     list.find(*args) do |task|
       abort 'task already completed' if task.complete?
@@ -162,13 +162,13 @@ command :break do |c|
   c.example 'Take a 30 minute break'  , 'pomo break --length 30'
 
   c.option '-l', '--length minutes', Integer, 'Change the default length in minutes'
-  c.option '-p', '--progress', 'Run with progress bar in foreground'
+  c.option '--notifier <lib>', String, 'Specify notificaiton library: `notification_center`, `libnotify`, `growl`, `quicksilver`'
+  c.option '--[no-]progress'         , 'Run with progress bar'
+  c.option '--[no-]tmux'             , 'Refresh tmux status bar on timer change'
   c.action do |args, options|
-    options.default :progress => false
-    options.default :length => 5
+    options.default :length => args.first ? args.first.to_i : 5
 
-    config = Pomo::Configuration.load
-    #options.default :length => args.first ? args.first.to_i : 5
+    config = Pomo::Configuration.load(options.__hash__)
     task = Pomo::Break.new('Break time', options.__hash__)
     task.start(config, :progress => options.progress)
   end

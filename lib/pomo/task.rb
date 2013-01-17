@@ -107,7 +107,7 @@ module Pomo
         elsif remaining == 5
           notifier.notify 'Almost there!', :header => '5 minutes remaining'
         end
-        sleep 60
+        sleep 60 unless ENV['POMO_ENV']=='test'
         { :remaining => remaining }
       end
 
@@ -135,7 +135,7 @@ module Pomo
           elsif remaining == 5
             notifier.notify 'Almost there!', :header => '5 minutes remaining'
           end
-          sleep 60
+          sleep 60 unless ENV['POMO_ENV']=='test'
         end
 
         write_tmux_time(0) if config.tmux

@@ -1,4 +1,6 @@
 require 'yaml'
+require 'commander'
+include Commander::UI
 
 module Pomo
   class Configuration
@@ -33,33 +35,38 @@ module Pomo
     end
 
     ##
-    # Load configuration or default_options.
+    # Load configuration file or default_options. Passed options take precedence.
 
-    def self.load
+    def self.load(options = {})
+      options.select!{|k,v| [:notifier, :progress, :tmux].include? k}
+
       if !(File.exists? config_file)
         File.open(config_file, 'w') { |file| YAML::dump(default_options, file) }
         say "Initialized default config file in #{config_file}. See 'pomo help initconfig' for options."
       end
 
-      options = YAML.load_file(config_file)
-      new(options)
+      config_file_options = YAML.load_file(config_file)
+      new(config_file_options.merge(options))
     end
 
     ##
-    # Save configuration.
+    # Save configuration. Passed options take precendence over default_options.
 
     def self.save(options = {})
+      force_save = options.delete :force
+      options.select!{|k,v| [:notifier, :progress, :tmux].include? k}
+
       options = default_options.merge(options)
 
-      if !(File.exists? config_file) || options[:force]
-        File.open(config_file, 'w') { |file| YAML::dump(options.reject{|k,v| k==:force}, file) }
+      if !(File.exists? config_file) || force_save
+        File.open(config_file, 'w') { |file| YAML::dump(options, file) }
         say "Initialized config file in #{config_file}"
       else
         say_error "Not overwriting existing config file #{config_file}, use --force to override. See 'pomo help initconfig'."
       end
     end
 
-    private
+    # Helpers
 
     def self.config_file
       File.join(ENV['HOME'],'.pomorc')

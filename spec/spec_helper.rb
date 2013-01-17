@@ -1,4 +1,5 @@
 require 'pomo'
+require 'fakefs/safe'
 
 # Taken from Aruba::Api
 class Pomo::RSpecHelper
@@ -22,12 +23,16 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     Pomo::RSpecHelper.set_env('POMO_ENV', 'test')
-    Pomo::RSpecHelper.set_env('HOME', '/tmp/home')
   end
 
   config.before(:each) do
-    FileUtils.rm_rf '/tmp/home'
-    FileUtils.mkdir '/tmp/home'
+    FakeFS.activate!
+    FileUtils.mkdir_p ENV['HOME']
+  end
+
+  config.after(:each) do
+    FakeFS.deactivate!
+    FakeFS::FileSystem.clear
   end
 
   config.after(:suite) do

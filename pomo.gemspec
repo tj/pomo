@@ -29,5 +29,6 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency('aruba', '~> 0.5.1')
   spec.add_development_dependency('rspec', '~> 2.12')
+  spec.add_development_dependency('fakefs', '~> 0.4')
   spec.add_development_dependency('yard')
 end
