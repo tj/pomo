@@ -1,3 +1,10 @@
+# This is to make sure Faraday doesn't warn the user about the `system_timer` gem missing in Ruby 1.8
+old_warn, $-w = $-w, nil
+begin
+  require 'faraday'
+ensure
+  $-w = old_warn
+end
 require 'octokit'
 
 module Pomo

@@ -38,7 +38,7 @@ module Pomo
     # Load configuration file or default_options. Passed options take precedence.
 
     def self.load(options = {})
-      options.select!{|k,v| [:notifier, :progress, :tmux].include? k}
+      options.reject!{|k,v| ![:notifier, :progress, :tmux].include? k}
 
       if !(File.exists? config_file)
         File.open(config_file, 'w') { |file| YAML::dump(default_options, file) }
@@ -54,7 +54,7 @@ module Pomo
 
     def self.save(options = {})
       force_save = options.delete :force
-      options.select!{|k,v| [:notifier, :progress, :tmux].include? k}
+      options.reject!{|k,v| ![:notifier, :progress, :tmux].include? k}
 
       options = default_options.merge(options)
 
