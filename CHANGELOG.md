@@ -1,13 +1,35 @@
+CHANGELOG
+=========                                                                                                                                                 
+
+2.1.0 / 2013-01-17                                                                                                                                                 
+==================                                                                                                                                                 
+
+* Added `pomo initconfig` to set up global preferences. Preferences
+  can be overridden on the command-line (e.g. `pomo start --notifier
+  growl`). Closes #30
+* Added multiple args to commands (e.g. `pomo rm 1..3 5..8`). Closes [#12]
+* Added `pomo move` and `pomo copy`. Closes #18
+* Added RSpec specs and Cucumber features. Closes #9
+
+View [the full changelog][2.1.0].
+[2.1.0]: https://github.com/visionmedia/pomo/compare/v2.0.2...v2.1.0
+
 2.0.2 / 2012-12-18
 ==================
 
   * Fixed Growl support. Closes #29
   * Removed unused configuration option `pomo_stat` from `.pomorc`
 
+View [the full changelog][2.0.2].
+[2.0.2]: https://github.com/visionmedia/pomo/compare/v2.0.1...v2.0.2
+
 2.0.1 / 2012-12-16
 ==================
 
   * Minor fix bug release for tmux status bar coloring.
+
+View [the full changelog][2.0.1].
+[2.0.1]: https://github.com/visionmedia/pomo/compare/v2.0.0...v2.0.1
 
 2.0.0 / 2012-12-16
 ==================
@@ -19,6 +41,9 @@
   * Fixed import of Github issues list. Closes #11
   * Added support for importing a single Github issue. Closes #2
   * Added `pomo ls` as an alias to `pomo list`
+
+View [the full changelog][2.0.0].
+[2.0.0]: https://github.com/visionmedia/pomo/compare/1.0.1...v2.0.0
 
 1.0.1 / 2010-03-10
 ==================
