@@ -81,7 +81,7 @@ Taken from `pomo help`:
 
   * Alternatively, you can start the first incomplete task with a progress bar:
 
-        $ pomo start -p
+        $ pomo start --progress
         Started Fix IE6 stying issues, you have 25 minutes :)
         (=........................) 24 minutes remaining
     
