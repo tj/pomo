@@ -1,8 +1,16 @@
 CHANGELOG
-=========                                                                                                                                                 
+=========
 
-2.1.0 / 2013-01-17                                                                                                                                                 
-==================                                                                                                                                                 
+2.1.1 / 2013-01-19
+==================
+
+* [@cgardner](https://github.com/cgardner) fixed `QuicksilverNotifier`.
+
+View [the full changelog][2.1.1].
+[2.1.1]: https://github.com/visionmedia/pomo/compare/v2.1.0...v2.1.1
+
+2.1.0 / 2013-01-17
+==================
 
 * Added `pomo initconfig` to set up global preferences. Preferences
   can be overridden on the command-line (e.g. `pomo start --notifier
