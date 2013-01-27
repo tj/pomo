@@ -19,16 +19,11 @@ Gem::Specification.new do |spec|
   spec.executables       = spec.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   spec.test_files        = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths     = ['lib']
-  spec.rdoc_options      = ['--line-numbers', '--inline-source', '--title', 'Pomo', '--main', 'Readme.md']
+  spec.rdoc_options      = ['--line-numbers', '--inline-source', '--title', 'Pomo', '--main', 'README.md']
 
   spec.add_dependency('commander', '~> 4.1')
   spec.add_dependency('octokit', '~> 1.19')
   spec.add_dependency('terminal-notifier', '~> 1.4') if Pomo::OS.mac?
   spec.add_dependency('growl', '~> 1.0')             if Pomo::OS.mac? || Pomo::OS.windows?
   spec.add_dependency('libnotify', '~> 0.8')         if Pomo::OS.linux?
-
-  spec.add_development_dependency('aruba', '~> 0.5.1')
-  spec.add_development_dependency('rspec', '~> 2.12')
-  spec.add_development_dependency('fakefs', '~> 0.4')
-  spec.add_development_dependency('yard')
 end
