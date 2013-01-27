@@ -46,32 +46,7 @@ module Pomo
     #
 
     def find(*args, &block)
-      found = []
-      found << tasks.first if args.empty?
-
-      args.each do |arg|
-        case arg
-        when 'all'
-          found = tasks
-          break
-        when 'first'
-          found << tasks.first
-        when 'last'
-          found << tasks.last
-        when 'complete'
-          found.concat tasks.select { |task| task.complete? }
-        when 'completed'
-          found.concat tasks.select { |task| task.complete? }
-        when 'incomplete'
-          found.concat tasks.select { |task| not task.complete? }
-        when /^(\d+)$/
-          found << tasks[$1.to_i]
-        when /^(\d+)\.\.(-?\d+)$/
-          found.concat tasks[$1.to_i..$2.to_i]
-        end
-      end
-
-      found.compact!
+      found = find_tasks(args)
 
       if block.arity == 2
         found.each_with_index do |task, i|
@@ -125,6 +100,33 @@ module Pomo
     end
 
     private
+
+    def find_tasks(args)
+      found = []
+      found << tasks.first if args.empty?
+
+      args.each do |arg|
+        case arg
+        when 'all'
+          found = tasks
+          break
+        when 'first'
+          found << tasks.first
+        when 'last'
+          found << tasks.last
+        when 'complete', 'completed'
+          found.concat tasks.select { |task| task.complete? }
+        when 'incomplete'
+          found.concat tasks.select { |task| not task.complete? }
+        when /^(\d+)$/
+          found << tasks[$1.to_i]
+        when /^(\d+)\.\.(-?\d+)$/
+          found.concat tasks[$1.to_i..$2.to_i]
+        end
+      end
+
+      found.compact
+    end
 
     def index(arg)
       case arg
