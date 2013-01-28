@@ -141,10 +141,10 @@ Taken from `pomo help`:
     
   * View task details:
 
-        $ pomo view first
-        $ pomo view last
-        $ pomo view 5
-        $ pomo view 1 2 3
+        $ pomo show first
+        $ pomo show last
+        $ pomo show 5
+        $ pomo show 1 2 3
 
   * Remove all tasks:
 
