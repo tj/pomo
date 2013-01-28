@@ -1,4 +1,5 @@
 before_install:
+  - apt-get install libnotify1
   - gem update --system
   - gem --version
 language: ruby
