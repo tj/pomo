@@ -1,4 +1,4 @@
-# Pomo [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/visionmedia/pomo)
+# Pomo [![Build Status](https://travis-ci.org/visionmedia/pomo.png?branch=master)](https://travis-ci.org/visionmedia/pomo) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/visionmedia/pomo)
 
 Command-line application for the [Pomodoro](http://www.pomodorotechnique.com/)
 time management technique, with notification and tmux status bar support.
