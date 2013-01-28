@@ -63,13 +63,10 @@ module Pomo
     ##
     # Import Github issue(s) with _user_, _project_, _number_ as GithubTask(s).
 
-    def self.import(user, project, number)
+    def self.import(user, project, number=nil)
       tasks = []
-      if number
-        issues = [Octokit.issue({:username => user, :repo => project}, number)]
-      else
-        issues = Octokit.list_issues({:username => user, :repo => project}, :state => 'open', :sort => 'created')
-      end
+
+      issues = get_issues(user, project, number)
 
       issues.each do |issue|
         tasks << new(issue.title,
@@ -81,7 +78,18 @@ module Pomo
           :url => issue.html_url
         )
       end
+
       return tasks
+    end
+
+    private
+
+    def self.get_issues(user, project, number)
+      if number
+        issues = [Octokit.issue({:username => user, :repo => project}, number)]
+      else
+        issues = Octokit.list_issues({:username => user, :repo => project}, :state => 'open', :sort => 'created')
+      end
     rescue Octokit::NotFound => e
       say "\n"
       say_error '404: This is not the repo you are looking for.'
