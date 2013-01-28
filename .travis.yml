@@ -1,7 +1,7 @@
 language: ruby
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install -qq libnotify1
+  - sudo apt-get install -qq libnotify-dev
   - gem update --system
   - gem --version
 rvm:
