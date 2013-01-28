@@ -1,8 +1,9 @@
+language: ruby
 before_install:
-  - apt-get install libnotify1
+  - apt-get update -y
+  - apt-get install -y libnotify1
   - gem update --system
   - gem --version
-language: ruby
 rvm:
   - 2.0.0
   - 1.9.3
