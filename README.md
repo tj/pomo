@@ -199,11 +199,11 @@ and blue during a break e.g.
 
 We :heart: pull requests and feedback. Feel free to
 [submit a ticket](https://github.com/visionmedia/pomo/issues) or see
-[CONTRIBUTING](https://github.com/visionmedia/pomo/blob/master/CONTRIBUTING.md)
+[CONTRIBUTING](CONTRIBUTING.md)
 for details on pull requests.
 
 ## Copyright
 
 Copyright (c) 2012 TJ Holowaychuk. See
-[LICENSE](https://github.com/visionmedia/pomo/blob/master/LICENSE.md)
+[LICENSE](LICENSE.md)
 for details.
