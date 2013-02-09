@@ -38,7 +38,7 @@ module Pomo
     # Load configuration file or default_options. Passed options take precedence.
 
     def self.load(options = {})
-      options.reject!{|k,v| ![:notifier, :progress, :tmux].include? k}
+      user_options = options.reject{|k,v| ![:notifier, :progress, :tmux].include? k}
 
       if !(File.exists? config_file)
         File.open(config_file, 'w') { |file| YAML::dump(default_options, file) }
@@ -46,20 +46,18 @@ module Pomo
       end
 
       config_file_options = YAML.load_file(config_file)
-      new(config_file_options.merge(options))
+      new(config_file_options.merge(user_options))
     end
 
     ##
     # Save configuration. Passed options take precendence over default_options.
 
     def self.save(options = {})
+      user_options = options.reject{|k,v| ![:notifier, :progress, :tmux].include? k}
       force_save = options.delete :force
-      options.reject!{|k,v| ![:notifier, :progress, :tmux].include? k}
-
-      options = default_options.merge(options)
 
       if !(File.exists? config_file) || force_save
-        File.open(config_file, 'w') { |file| YAML::dump(options, file) }
+        File.open(config_file, 'w') { |file| YAML::dump(default_options.merge(user_options), file) }
         say "Initialized config file in #{config_file}"
       else
         say_error "Not overwriting existing config file #{config_file}, use --force to override. See 'pomo help initconfig'."
