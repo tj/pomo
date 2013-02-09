@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+2.1.2 / 2013-02-09
+==================
+
+* Fixed default Break time. Closes #36
+
+View [the full changelog][2.1.2].
+[2.1.2]: https://github.com/visionmedia/pomo/compare/v2.1.1...v2.1.2
+
 2.1.1 / 2013-01-19
 ==================
 
@@ -15,7 +23,7 @@ View [the full changelog][2.1.1].
 * Added `pomo initconfig` to set up global preferences. Preferences
   can be overridden on the command-line (e.g. `pomo start --notifier
   growl`). Closes #30
-* Added multiple args to commands (e.g. `pomo rm 1..3 5..8`). Closes [#12]
+* Added multiple args to commands (e.g. `pomo rm 1..3 5..8`). Closes #12
 * Added `pomo move` and `pomo copy`. Closes #18
 * Added RSpec specs and Cucumber features. Closes #9
 
