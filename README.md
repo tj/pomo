@@ -5,8 +5,8 @@ time management technique, with notification and tmux status bar support.
 
 ## Description
 
-With Pomo you can add, remove, list, view, and start timing tasks all via the 
-command-line with a simple, slick interface. You are reminded of the remaining 
+With Pomo you can add, remove, list, view, and start timing tasks all via the
+command-line with a simple, slick interface. You are reminded of the remaining
 time on a task via Notification Center, Growl, libnotify, or Quicksilver.
 These notifications appear half-way, at the 5 minute point, and when the task
 duration has expired. Also, the Pomo timer can be displayed in your tmux
@@ -60,11 +60,11 @@ Taken from `pomo help`:
   * Get started by adding a task:
 
         $ pomo add "Fix IE6 stying issues"
-    
+
     And another:
 
         $ pomo add "Destroy IE6" --description "because IE6 is terrible"
-    
+
   * List your tasks (or use `pomo` which defaults to `pomo list`):
 
         $ pomo list
@@ -84,24 +84,24 @@ Taken from `pomo help`:
         $ pomo start --progress
         Started Fix IE6 stying issues, you have 25 minutes :)
         (=........................) 24 minutes remaining
-    
-  * Once you have completed the task, list again (alternatively `pomo ls`):
+
+  * Once you have completed the task, list again (alternatively `pomo ls`) for remaining tasks:
 
         $ pomo ls
-          ✓ 0. Fix IE6 stying issues                : 25 minutes
             1. Destroy IE6                          : 25 minutes
-        
+
   * Or take a break:
 
         $ pomo break
         $ pomo break 10
         $ pomo break --length 10
-        
-  * List only remaining tasks:
 
-        $ pomo ls --incomplete
+  * List all tasks:
+
+        $ pomo ls --all
+          ✓ 0. Fix IE6 stying issues                : 25 minutes
             1. Destroy IE6                          : 25 minutes
-        
+
   * List only completed tasks:
 
         $ pomo ls --complete
@@ -121,13 +121,13 @@ Taken from `pomo help`:
     will start:
 
         $ pomo start
-    
+
     Or choose a specific task:
 
         $ pomo start first
         $ pomo start last
         $ pomo start 5
-    
+
   * You may also remove tasks:
 
         $ pomo remove first
@@ -138,7 +138,7 @@ Taken from `pomo help`:
         $ pomo rm first
         $ pomo rm 2..5
         $ pomo rm 1..-1
-    
+
   * View task details:
 
         $ pomo show first
@@ -173,10 +173,10 @@ Settings are easily customizable. Taken from `pomo help initconfig`:
     pomo initconfig --notifier notification_center --no-progress --tmux
 
     Options:
-      --notifier <lib>     Specify notificaiton library: `notification_center`, `libnotify`, `growl`, `quicksilver` 
-      --[no-]progress      Run with progress bar 
-      --[no-]tmux          Refresh tmux status bar on timer change 
-      --[no-]force         force overwrite of existing config file 
+      --notifier <lib>     Specify notificaiton library: `notification_center`, `libnotify`, `growl`, `quicksilver`
+      --[no-]progress      Run with progress bar
+      --[no-]tmux          Refresh tmux status bar on timer change
+      --[no-]force         force overwrite of existing config file
 
 ### Tmux Status Bar Integration
 
