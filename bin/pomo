@@ -315,8 +315,8 @@ command :list do |c|
     config = Pomo::Configuration.load
     total = 0
     list.tasks.each_with_index do |task, i|
-      next if !options.all && !options.complete && task.complete?
-      next if options.complete && !task.complete?
+      next if task.complete? && !options.all && !options.complete
+      next if !task.complete? && options.complete
 
       say ' %s %2d. %-50s : %d minutes' % [task.complete? ? '✓' : ' ', i, task.to_s, task.length]
       total += task.length
