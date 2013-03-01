@@ -1,6 +1,15 @@
 CHANGELOG
 =========
 
+2.1.3 / 2013-03-01
+==================
+
+* [@bluestrike2](https://github.com/bluestrike2) added `pomo list` defaults to only incomplete tasks,
+  while `pomo list -a` list all tasks.
+
+View [the full changelog][2.1.3].
+[2.1.3]: https://github.com/visionmedia/pomo/compare/v2.1.2...v2.1.3
+
 2.1.2 / 2013-02-09
 ==================
 
